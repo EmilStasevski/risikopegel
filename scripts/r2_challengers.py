@@ -208,9 +208,6 @@ def main() -> None:
 
     csi = csi_table(pd.concat([d.X_train]), d.X_kaggle)
     csi.to_csv(OUT / "csi_train_to_kaggle.csv", index=False)
-    pd.DataFrame({k: v["test"] for k, v in preds.items()}).assign(y=d.y_test).to_parquet(
-        ART / "test_predictions.parquet"
-    )
 
     out = {
         "run": {
@@ -245,6 +242,9 @@ def main() -> None:
         "models": res,
     }
     (OUT / "results.json").write_text(json.dumps(out, indent=2, default=float))
+    # artifacts after results: a failure here must not lose the metrics
+    test_preds = pd.DataFrame({k: v["test"] for k, v in preds.items()}).assign(y=d.y_test)
+    test_preds.to_parquet(ART / "test_predictions.parquet")
     for name, r in res.items():
         log.info("%-18s test AUC %.4f  Brier %.5f  slope %.3f  PSI(kaggle) %.3f", name, r["test"]["auc"],
                  r["test"]["brier"], r["test"]["calibration_slope"], r["psi_train_to_kaggle"])  # fmt: skip
