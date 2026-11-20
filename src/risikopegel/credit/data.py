@@ -36,3 +36,12 @@ def load_gmsc_train(root: Path = GMSC_DIR) -> pd.DataFrame:
     if missing:
         raise ValueError(f"unexpected schema, missing {sorted(missing)}")
     return df[[GMSC_TARGET, *GMSC_FEATURES]]
+
+
+def load_gmsc_test(root: Path = GMSC_DIR) -> pd.DataFrame:
+    """Kaggle test file: same features, target column empty. Index = Kaggle `Id`."""
+    df = pd.read_csv(root / "cs-test.csv", index_col=0).rename(columns=GMSC_COLUMNS)
+    df.index.name = "Id"
+    if df[GMSC_TARGET].notna().any():
+        raise ValueError("cs-test.csv unexpectedly contains labels")
+    return df[GMSC_FEATURES]

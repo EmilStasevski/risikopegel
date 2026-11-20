@@ -17,3 +17,6 @@ models/
 .env
 *.key
 kaggle.json
+
+# Kaggle submission files (predictions on Kaggle test data; upload manually)
+submissions/

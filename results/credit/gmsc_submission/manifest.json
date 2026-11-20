@@ -1,0 +1,9 @@
+{
+  "utc": "2026-11-20T17:15:07+00:00",
+  "file": "submissions/gmsc_woe_scorecard.csv",
+  "sha256": "024cda369f45912160eff47390581cf3c388d62431a9b0a2357439c8f88b6ba6",
+  "rows": 101503,
+  "model": "WoE/logistic scorecard, smoke-test config, fitted on all 150,000 cs-training rows",
+  "mean_probability": 0.06692120080634921,
+  "kaggle_score": null
+}
