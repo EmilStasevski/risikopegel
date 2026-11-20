@@ -1,0 +1,37 @@
+# Risikopegel: single entry point. Run `task --list`.
+version: "3"
+
+tasks:
+  default:
+    cmds: [task --list]
+    silent: true
+
+  setup:
+    desc: Install locked dependencies
+    cmds: [uv sync --locked]
+
+  lint:
+    desc: ruff (lint + format check) and mypy --strict
+    cmds:
+      - uv run ruff check .
+      - uv run ruff format --check .
+      - uv run mypy
+
+  test:
+    desc: All tests (offline)
+    cmds: [uv run pytest]
+
+  test:leakage:
+    desc: Leakage and split-policy tests only
+    cmds: [uv run pytest -m leakage]
+
+  ci:
+    desc: What CI runs
+    cmds:
+      - task: lint
+      - task: test
+
+  report:
+    desc: Rebuild every table and plot from results/ (filled in as modules land)
+    cmds:
+      - echo "no reports yet (R1)"

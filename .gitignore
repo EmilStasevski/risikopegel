@@ -1,0 +1,19 @@
+# data is never committed (licenses forbid redistribution in several cases)
+data/**
+!data/**/
+!data/**/.gitkeep
+
+# environments / caches
+.venv/
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+mlruns/
+models/
+
+# secrets
+.env
+*.key
+kaggle.json
