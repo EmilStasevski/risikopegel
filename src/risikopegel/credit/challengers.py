@@ -90,7 +90,7 @@ def fit_lightgbm(
         p["monotone_constraints_method"] = "advanced"
     t0 = time.perf_counter()
     m = lgb.LGBMClassifier(**p)
-    m.fit(X_tr, np.asarray(y_tr), eval_set=[(X_va, np.asarray(y_va))], eval_metric="auc",
+    m.fit(X_tr, np.asarray(y_tr), eval_X=(X_va,), eval_y=(np.asarray(y_va),), eval_metric="auc",
           callbacks=[lgb.early_stopping(200, verbose=False)])  # fmt: skip
     dt = time.perf_counter() - t0
     name = "lightgbm_monotone" if monotone is not None else "lightgbm"
