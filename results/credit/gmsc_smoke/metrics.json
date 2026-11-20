@@ -1,0 +1,190 @@
+{
+  "run": {
+    "script": "scripts/smoke_gmsc_scorecard.py",
+    "utc": "2026-11-20T17:12:38+00:00",
+    "seed": 20261120,
+    "python": "3.12.14",
+    "optbinning": "1.0.0",
+    "sklearn": "1.9.1",
+    "fit_seconds": 0.9110969160001332
+  },
+  "data": {
+    "dataset": "Give Me Some Credit (Kaggle), cs-training.csv",
+    "rows": 150000,
+    "train_rows": 105000,
+    "test_rows": 45000,
+    "split": "stratified random 70/30 (no time column; documented exception)"
+  },
+  "config": {
+    "pdo": 20.0,
+    "base_odds": 50.0,
+    "base_points": 600.0,
+    "max_n_prebins": 20,
+    "min_bin_size": 0.05,
+    "monotonic_trend": "auto_asc_desc",
+    "min_iv": 0.02,
+    "C": 1.0,
+    "special_codes": {
+      "n_30_59_dpd": [
+        96,
+        98
+      ],
+      "n_60_89_dpd": [
+        96,
+        98
+      ],
+      "n_90_dpd": [
+        96,
+        98
+      ]
+    }
+  },
+  "selected_variables": [
+    "revolving_util",
+    "age",
+    "n_30_59_dpd",
+    "debt_ratio",
+    "monthly_income",
+    "n_open_lines",
+    "n_90_dpd",
+    "n_real_estate",
+    "n_60_89_dpd",
+    "n_dependents"
+  ],
+  "holdout": {
+    "n": 45000,
+    "default_rate": 0.06684444444444444,
+    "mean_pd": 0.06609165833205849,
+    "auc": 0.8471984310334694,
+    "gini": 0.6943968620669387,
+    "ks": 0.5401365710996624,
+    "pr_auc": 0.35493799158796047,
+    "brier": 0.051164545733063276,
+    "calibration_slope": 1.0084206152447222,
+    "calibration_intercept": 0.03217666766358654,
+    "ece": 0.004741864215810855
+  },
+  "train": {
+    "n": 105000,
+    "default_rate": 0.06683809523809524,
+    "mean_pd": 0.06682852852191994,
+    "auc": 0.8464930126952497,
+    "gini": 0.6929860253904994,
+    "ks": 0.5445287759363551,
+    "pr_auc": 0.35203084152329756,
+    "brier": 0.051390094195075564,
+    "calibration_slope": 1.0002736594855695,
+    "calibration_intercept": 0.00045995003850022795,
+    "ece": 0.003714659625751408
+  },
+  "cv5_on_train": [
+    {
+      "fold": 0,
+      "n": 21000,
+      "default_rate": 0.06685714285714285,
+      "mean_pd": 0.06760612763766094,
+      "auc": 0.8552590679300212,
+      "gini": 0.7105181358600423,
+      "ks": 0.5630226297709457,
+      "pr_auc": 0.3647776045713381,
+      "brier": 0.05078137849771303,
+      "calibration_slope": 1.0319268839177393,
+      "calibration_intercept": 0.04977201898964978,
+      "ece": 0.005779725602379937
+    },
+    {
+      "fold": 1,
+      "n": 21000,
+      "default_rate": 0.06685714285714285,
+      "mean_pd": 0.06556110158470543,
+      "auc": 0.8352680521171539,
+      "gini": 0.6705361042343079,
+      "ks": 0.5237066521512326,
+      "pr_auc": 0.3335670244093135,
+      "brier": 0.052343987056919346,
+      "calibration_slope": 0.96449860325819,
+      "calibration_intercept": -0.04838722639673306,
+      "ece": 0.00506622736382813
+    },
+    {
+      "fold": 2,
+      "n": 21000,
+      "default_rate": 0.06685714285714285,
+      "mean_pd": 0.06763035953576828,
+      "auc": 0.8492105524471822,
+      "gini": 0.6984211048943645,
+      "ks": 0.5488796771711653,
+      "pr_auc": 0.35599464837387657,
+      "brier": 0.05098680668809482,
+      "calibration_slope": 1.0175787896973287,
+      "calibration_intercept": 0.020211187741502826,
+      "ece": 0.004420205346846378
+    },
+    {
+      "fold": 3,
+      "n": 21000,
+      "default_rate": 0.0668095238095238,
+      "mean_pd": 0.06614923875434148,
+      "auc": 0.8395401117259755,
+      "gini": 0.6790802234519511,
+      "ks": 0.5396797137298751,
+      "pr_auc": 0.35221042095035193,
+      "brier": 0.05149415905763784,
+      "calibration_slope": 0.9978052146954591,
+      "calibration_intercept": 0.008611500464054263,
+      "ece": 0.003962510056536401
+    },
+    {
+      "fold": 4,
+      "n": 21000,
+      "default_rate": 0.0668095238095238,
+      "mean_pd": 0.0670090414859882,
+      "auc": 0.8429552561811158,
+      "gini": 0.6859105123622316,
+      "ks": 0.5455574880164611,
+      "pr_auc": 0.344391737682828,
+      "brier": 0.05200883950725115,
+      "calibration_slope": 0.9639860956552281,
+      "calibration_intercept": -0.07754025246799472,
+      "ece": 0.0033453351375385774
+    }
+  ],
+  "shuffled_label": {
+    "auc_scores": [
+      0.4211598775589981,
+      0.6272002275382748,
+      0.7386863304826553,
+      0.5228149974678561,
+      0.33558258104760585,
+      0.5062800834594128,
+      0.6082268503904493,
+      0.5711951956781027,
+      0.7712360057564156,
+      0.4798903011034523,
+      0.48226805343241663,
+      0.6609521882397558,
+      0.5998940947275164,
+      0.36134163520381796,
+      0.5746648875685034,
+      0.5286605060031698,
+      0.5750915614182337,
+      0.6253490050219799,
+      0.2810496507630126,
+      0.284535754404081
+    ],
+    "mean": 0.5278039893632854,
+    "sd": 0.13760934467399347,
+    "se": 0.030770384903024802,
+    "z": 3.0,
+    "chance": 0.5,
+    "tolerance": 0.02,
+    "passed": true,
+    "note": "IV selection disabled (min_iv=0) so binning + regression still fit on noise"
+  },
+  "public_reference": {
+    "source": "Kaggle CLI `kaggle competitions leaderboard -c GiveMeSomeCredit --show`, fetched 2026-11-20",
+    "top_leaderboard_auc": 0.86955,
+    "comparable": false,
+    "note": "Leaderboard AUC is on the unlabelled Kaggle test set; this holdout is a different sample."
+  }
+}

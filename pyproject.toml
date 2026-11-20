@@ -10,6 +10,7 @@ dependencies = [
     "polars>=1.20",
     "scipy>=1.14",
     "scikit-learn>=1.6",
+    "optbinning>=0.20",
 ]
 
 [dependency-groups]
@@ -34,15 +35,19 @@ ignore = ["PLR2004", "PLR0913", "N803", "N806"]  # magic values in tests; X/y na
 [tool.mypy]
 strict = true
 python_version = "3.12"
-files = ["src/risikopegel", "tests"]
+files = ["src/risikopegel", "tests", "scripts"]
 mypy_path = "src"
 explicit_package_bases = true
 
 [[tool.mypy.overrides]]
-module = ["sklearn.*", "scipy.*"]
+module = ["sklearn.*", "scipy.*", "optbinning.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q --strict-markers"
 markers = ["leakage: leakage guard tests (must stay green in CI)"]
+filterwarnings = [
+    # pandas-3 deprecations raised inside optbinning 1.0.0, not in our code
+    "ignore::Warning:optbinning.*",
+]

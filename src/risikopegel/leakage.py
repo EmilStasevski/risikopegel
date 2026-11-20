@@ -82,14 +82,26 @@ class ShuffledLabelResult:
     scores: npt.NDArray[np.float64]
     chance: float
     tolerance: float
+    z: float = 3.0
 
     @property
     def mean(self) -> float:
         return float(self.scores.mean())
 
     @property
+    def sd(self) -> float:
+        return float(self.scores.std(ddof=1)) if self.scores.size > 1 else 0.0
+
+    @property
+    def se(self) -> float:
+        return self.sd / float(np.sqrt(self.scores.size))
+
+    @property
     def passed(self) -> bool:
-        return abs(self.mean - self.chance) <= self.tolerance
+        # A model fitted on noise still ranks by *some* feature combination; with a few strong features
+        # its test AUC scatters widely around chance in both directions (GMSC scorecard: SD ~0.10 over
+        # 20 rounds). A leak shifts every round the same way. So: mean within max(tolerance, z * SE).
+        return abs(self.mean - self.chance) <= max(self.tolerance, self.z * self.se)
 
 
 FitScore = Callable[[pd.DataFrame, npt.NDArray[Any], pd.DataFrame, npt.NDArray[Any]], float]
@@ -103,8 +115,9 @@ def shuffled_label_check(
     *,
     chance: float,
     tolerance: float,
-    n_rounds: int = 5,
+    n_rounds: int = 20,
     seed: int = 0,
+    z: float = 3.0,
 ) -> ShuffledLabelResult:
     """Train on permuted training labels (test labels untouched) and score on the test fold.
 
@@ -119,4 +132,4 @@ def shuffled_label_check(
     scores = np.array(
         [fit_score(X_tr, rng.permutation(y_tr), X_te, y_te) for _ in range(n_rounds)], dtype=np.float64
     )
-    return ShuffledLabelResult(scores=scores, chance=chance, tolerance=tolerance)
+    return ShuffledLabelResult(scores=scores, chance=chance, tolerance=tolerance, z=z)

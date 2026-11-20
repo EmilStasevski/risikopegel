@@ -25,6 +25,17 @@ tasks:
     desc: Leakage and split-policy tests only
     cmds: [uv run pytest -m leakage]
 
+  smoke:
+    desc: Smoke-test scorecard on Give Me Some Credit (needs data/raw/givemesomecredit)
+    cmds: [uv run python -W ignore scripts/smoke_gmsc_scorecard.py]
+
+  data:gmsc:
+    desc: Download Give Me Some Credit via Kaggle CLI (needs token + accepted rules)
+    cmds:
+      - mkdir -p data/raw/givemesomecredit
+      - uvx --from kaggle --with six kaggle competitions download -c GiveMeSomeCredit -p data/raw/givemesomecredit
+      - cd data/raw/givemesomecredit && unzip -o -q GiveMeSomeCredit.zip
+
   ci:
     desc: What CI runs
     cmds:
@@ -34,4 +45,4 @@ tasks:
   report:
     desc: Rebuild every table and plot from results/ (filled in as modules land)
     cmds:
-      - echo "no reports yet (R1)"
+      - uv run python scripts/report.py

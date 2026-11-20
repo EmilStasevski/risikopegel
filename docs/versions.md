@@ -13,6 +13,8 @@ The exact pins are in `uv.lock`. This table records what was installed and check
 | scipy | 1.18.1 | uv.lock |
 | scikit-learn | 1.9.1 | uv.lock |
 | ruff / mypy / pytest | 0.17.6 / 2.4.1 / 9.2.0 | dev group |
+| optbinning | 1.0.0 | uv.lock. Raises pandas-3 deprecation warnings internally (filtered in pytest config). `Scorecard(scaling_method="pdo_odds")` API checked by inspecting the installed version |
+| Kaggle CLI | 2.2.5 | `uvx --from kaggle --with six` (2.2.5 is missing its `six` dependency) |
 | go-task | 3.54.0 | `~/go/bin/task` |
 | DuckDB CLI | 2.0.0 | `~/.local/bin/duckdb` |
 | rustc | 1.99.1 | for the optional PyO3 kernel (R3) |

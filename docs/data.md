@@ -25,8 +25,20 @@ Sources for these checks: [UCI 350](https://archive.ics.uci.edu/dataset/350/defa
 
 - **Approved:** ECB/Bundesbank/Eurostat APIs; Kaggle Give Me Some Credit and Home Credit (Home Credit's 2.7 GB was approved explicitly); Stooq DAX prices (download only after Stooq's terms page has been read and recorded here).
 - **Not approved:** the UCI sets (Taiwan, South German Credit). So the smoke-test scorecard (checklist step 4) moves to Give Me Some Credit.
-- **Blocked on:** Kaggle API token (`~/.kaggle/kaggle.json` or `KAGGLE_API_TOKEN`) and accepting both competitions' rules on kaggle.com. Only the user can do either.
+- Kaggle access: the user set up an API token (`~/.kaggle/access_token`) and accepted the competition rules on 2026-11-20. Downloads use Kaggle CLI 2.2.5 through `uvx` (`task data:gmsc`).
 
 ## Downloaded datasets
 
-_(none yet)_
+### Give Me Some Credit (Kaggle `GiveMeSomeCredit`)
+
+| Field | Value |
+|---|---|
+| Downloaded | 2026-11-20, `task data:gmsc` (Kaggle CLI 2.2.5), `GiveMeSomeCredit.zip` 5.4 MB |
+| Terms | Kaggle competition rules, accepted by the user; Kaggle ToS: personal, non-commercial use. Not redistributed, `data/` is git-ignored |
+| Files | `cs-training.csv` (150,000 labelled rows, sha256 `1bd46da4…24ac`), `cs-test.csv` (101,503 rows, **no labels**, sha256 `bab363a2…5b78`), `Data Dictionary.xls` |
+| Target | `SeriousDlqin2yrs` (90+ days past due within 2 years), default rate 6.684% in cs-training |
+| Missing values | `MonthlyIncome` 29,731 rows; `NumberOfDependents` 3,924 rows |
+| Quirks (verified) | All three past-due counts hold codes **96/98** in the same 269 rows, so they are treated as special codes, not counts. One row has `age == 0`. 609 exact duplicate rows (kept, because they may be real look-alike applicants) |
+| Known biases / limits | US consumer credit, collection period and population not documented, no application date, so **no out-of-time split** is possible and stability/drift can't be tested. Not a German population |
+| Public reference | Top Kaggle leaderboard AUC 0.86955 (Kaggle CLI leaderboard, fetched 2026-11-20). It's measured on the unlabelled test set, so it can only be compared after a late submission |
+
