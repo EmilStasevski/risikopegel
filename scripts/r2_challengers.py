@@ -33,6 +33,7 @@ import optbinning
 import pandas as pd
 import sklearn
 import xgboost
+from sklearn.isotonic import IsotonicRegression
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score
 
@@ -54,6 +55,7 @@ SEED = 20261120
 OUT = Path("results/credit/hc_challengers")
 ART = Path("data/processed/hc_challengers")
 N_BOOT = 1000
+APPROVAL_RATE = 0.85  # illustrative policy for the decision view; not a recommendation
 log = logging.getLogger("r2")
 
 GRIDS: dict[str, dict[str, list[Any]]] = {
@@ -169,6 +171,8 @@ def main() -> None:
         p_va, p_tr, p_kg = f.predict(d.X_valid), f.predict(d.X_train), f.predict(d.X_kaggle)
         cal = platt(p_va, d.y_valid)
         p_te_cal = cal(p_te)
+        iso = IsotonicRegression(out_of_bounds="clip", y_min=1e-6, y_max=1 - 1e-6).fit(p_va, d.y_valid)
+        p_te_iso = np.asarray(iso.predict(p_te), dtype=np.float64)
         preds[name] = {"test": p_te, "test_platt": p_te_cal, "train": p_tr, "valid": p_va, "kaggle": p_kg}
         res[name] = {
             "selected_params": f.params,
@@ -178,6 +182,7 @@ def main() -> None:
             "extra": f.extra,
             "test": pd_metrics(d.y_test, p_te),
             "test_platt": pd_metrics(d.y_test, p_te_cal),
+            "test_isotonic": pd_metrics(d.y_test, p_te_iso),
             "train_auc": float(roc_auc_score(d.y_train, p_tr)),
             "valid_auc": float(roc_auc_score(d.y_valid, p_va)),
             "psi_train_to_kaggle": psi(p_tr, p_kg),
@@ -205,6 +210,19 @@ def main() -> None:
             }
             for k in ("F", "M")
         }
+        # decision view: cutoff fixed on VALID so that APPROVAL_RATE of applicants are approved
+        cut = float(np.quantile(preds[name]["valid"], APPROVAL_RATE))
+        approve = preds[name]["test"] <= cut
+        res[name]["at_cutoff"] = {"approval_rate_target": APPROVAL_RATE, "pd_cutoff": cut, "groups": {}}
+        for k in ("all", "F", "M"):
+            m = np.ones_like(approve) if k == "all" else (g == k)
+            yk, ak = d.y_test[m], approve[m]
+            res[name]["at_cutoff"]["groups"][k] = {
+                "approval_rate": float(ak.mean()),
+                "default_rate_approved": float(yk[ak].mean()),
+                "share_defaulters_rejected": float((~ak[yk == 1]).mean()),
+                "share_goods_rejected": float((~ak[yk == 0]).mean()),
+            }
 
     csi = csi_table(pd.concat([d.X_train]), d.X_kaggle)
     csi.to_csv(OUT / "csi_train_to_kaggle.csv", index=False)
@@ -240,11 +258,19 @@ def main() -> None:
         "monotone_signs": signs,
         "grids": GRIDS,
         "models": res,
+        # champion chosen on VALID AUC only (never on test), among the challengers
+        "champion": {
+            "name": max((k for k in res if k != "scorecard"), key=lambda k: res[k]["valid_auc"]),
+            "rule": "highest valid AUC among challengers",
+        },
     }
     (OUT / "results.json").write_text(json.dumps(out, indent=2, default=float))
     # artifacts after results: a failure here must not lose the metrics
-    test_preds = pd.DataFrame({k: v["test"] for k, v in preds.items()}).assign(y=d.y_test)
-    test_preds.to_parquet(ART / "test_predictions.parquet")
+    for part, yv in (("test", d.y_test), ("valid", d.y_valid)):
+        pd.DataFrame({k: v[part] for k, v in preds.items()}).assign(y=yv).to_parquet(
+            ART / f"{part}_predictions.parquet"
+        )
+    pd.DataFrame({k: v["kaggle"] for k, v in preds.items()}).to_parquet(ART / "kaggle_predictions.parquet")
     for name, r in res.items():
         log.info("%-18s test AUC %.4f  Brier %.5f  slope %.3f  PSI(kaggle) %.3f", name, r["test"]["auc"],
                  r["test"]["brier"], r["test"]["calibration_slope"], r["psi_train_to_kaggle"])  # fmt: skip

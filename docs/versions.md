@@ -13,6 +13,8 @@ The exact pins are in `uv.lock`. This table records what was installed and check
 | scipy | 1.18.1 | uv.lock |
 | scikit-learn | 1.9.1 | uv.lock |
 | ruff / mypy / pytest | 0.17.6 / 2.4.1 / 9.2.0 | dev group |
+| lightgbm / catboost / xgboost / interpret | 4.7.0 / 1.2.10 / 3.4.1 / 0.7.8 | uv.lock (R2). SHAP: the libraries' built-in exact TreeSHAP, not the `shap` package. **XGBoost pitfall:** `Booster.predict(pred_contribs=True)` uses all trees unless `iteration_range` is passed, while the sklearn wrapper predicts with the early-stopped prefix. Fixed in `credit/explain.py` and covered by a test |
+| matplotlib / pyarrow | 3.11.2 / see uv.lock | figures / parquet artifacts |
 | optbinning | 1.0.0 | uv.lock. Raises pandas-3 deprecation warnings internally (filtered in pytest config). `Scorecard(scaling_method="pdo_odds")` API checked by inspecting the installed version |
 | Kaggle CLI | 2.2.5 | `uvx --from kaggle --with six` (2.2.5 is missing its `six` dependency) |
 | go-task | 3.54.0 | `~/go/bin/task` |
@@ -32,6 +34,6 @@ Libraries for the later milestones (optbinning, lightgbm, catboost, xgboost, sha
 |---|---|---|
 | Basel traffic light: 250 days at 99%, green ≤4, yellow 5–9, red ≥10 (§4) | open (R3) | Basel Committee, Supervisory framework for the use of backtesting (1996) / MAR99 |
 | 97.5% ES is the FRTB basis (§4) | open (R3) | BCBS MAR33 |
-| EU AI Act: credit scoring listed as high-risk (§3) | open (R2) | Regulation (EU) 2024/1689, Annex III |
+| EU AI Act: credit scoring listed as high-risk (§3) | **verified 2026-11-20:** Annex III point 5(b) covers evaluating the creditworthiness of natural persons or establishing their credit score, except systems used to detect financial fraud. Commission guidelines on high-risk classification were still a draft in the sources found | [AI Act Service Desk, Annex III](https://ai-act-service-desk.ec.europa.eu/en/ai-act/annex-3); law-firm commentary on the draft guidelines |
 | SR 11-7 and ECB/BaFin model-risk guidance names (§7) | open (R5) | |
 | Foundation models current and licensed (Chronos, TimesFM, Moirai) (§5) | open (R4) | |

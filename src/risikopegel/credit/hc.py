@@ -16,7 +16,15 @@ ID = "sk_id_curr"
 # Kept out of the model on purpose: used only for the fairness check (EU/German anti-discrimination law;
 # see docs/model_cards). Not a claim of legal compliance.
 PROTECTED = ["gender"]
-CATEGORICAL = ["contract_type", "income_type", "education", "family_status", "housing_type", "occupation"]
+CATEGORICAL = [
+    "contract_type",
+    "income_type",
+    "education",
+    "family_status",
+    "housing_type",
+    "occupation",
+    "bureau_history_status",
+]
 BOOLEAN = ["owns_car", "owns_realty", "employed_placeholder"]
 DROP = [ID, TARGET, "is_train", *PROTECTED]
 

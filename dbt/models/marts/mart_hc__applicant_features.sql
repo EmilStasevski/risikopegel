@@ -4,7 +4,7 @@ select
     a.*,
     a.credit_amount / nullif(a.income, 0)      as credit_to_income,
     a.annuity / nullif(a.income, 0)            as annuity_to_income,
-    a.credit_amount / nullif(a.annuity, 0)     as credit_term_years,
+    a.credit_amount / nullif(a.annuity, 0)     as credit_to_annuity,  -- ratio; no unit guaranteed
     -a.days_birth / 365.25                      as age_years,
     coalesce(b.bureau_n_loans, 0)              as bureau_n_loans,
     coalesce(b.bureau_n_active, 0)             as bureau_n_active,
@@ -19,6 +19,13 @@ select
     b.bureau_days_since_first_open,
     b.bureau_worst_dpd_bucket,
     b.bureau_worst_dpd_bucket_12m,
+    -- 3-state history availability: no bureau record / bureau loans without monthly history / with history
+    case
+        when coalesce(b.bureau_n_loans, 0) = 0 then 'no_bureau'
+        when b.bureau_n_loans_with_history = 0 then 'bureau_no_history'
+        else 'bureau_with_history'
+    end                                        as bureau_history_status,
+    coalesce(b.bureau_history_coverage, 0)     as bureau_history_coverage,
     coalesce(p.prev_n_applications, 0)         as prev_n_applications,
     coalesce(p.prev_n_refused, 0)              as prev_n_refused,
     coalesce(p.prev_n_approved, 0)             as prev_n_approved,

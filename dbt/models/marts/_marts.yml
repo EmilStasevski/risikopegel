@@ -10,6 +10,15 @@ models:
         data_tests: [not_null]
       - name: bureau_n_loans
         data_tests: [not_null]
+      - name: bureau_history_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments: {values: ['no_bureau', 'bureau_no_history', 'bureau_with_history']}
+      - name: bureau_history_coverage
+        data_tests:
+          - not_null
+          - between: {arguments: {min_value: 0, max_value: 1}}
       - name: inst_share_late
         data_tests:
           - between: {arguments: {min_value: 0, max_value: 1}}

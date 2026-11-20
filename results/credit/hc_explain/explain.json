@@ -1,0 +1,166 @@
+{
+  "run": {
+    "script": "scripts/r2_explain.py",
+    "utc": "2026-11-20T19:10:34+00:00"
+  },
+  "champion": "lightgbm",
+  "models": {
+    "scorecard": {
+      "method": "coefficient x WoE (logistic, exact)",
+      "rows_explained": 61503,
+      "additivity_max_abs_error_logit": 1.7763568394002505e-15,
+      "additivity_p99_abs_error_logit": 8.881784197001252e-16,
+      "top10_terms": {
+        "ext_source_2": 0.33446336362946816,
+        "ext_source_3": 0.27756806781610655,
+        "bureau_debt_to_credit": 0.13646330632312761,
+        "occupation": 0.11599427099433368,
+        "ext_source_1": 0.11432432643411158,
+        "credit_amount": 0.11271160157137582,
+        "prev_mean_credit_to_application": 0.11077262682211268,
+        "days_employed": 0.10845516936497483,
+        "education": 0.09975663491614618,
+        "inst_share_late": 0.09768104446560819
+      },
+      "n_terms": 34
+    },
+    "lightgbm": {
+      "method": "TreeSHAP (LightGBM pred_contrib)",
+      "rows_explained": 61503,
+      "additivity_max_abs_error_logit": 2.3092638912203256e-14,
+      "additivity_p99_abs_error_logit": 1.2434497875801753e-14,
+      "top10_terms": {
+        "ext_source_2": 0.3002394173690387,
+        "ext_source_3": 0.25889171399705224,
+        "goods_price": 0.16831465509453658,
+        "ext_source_1": 0.15970134764384222,
+        "credit_to_annuity": 0.15236145168200146,
+        "inst_n": 0.12279688158073199,
+        "prev_mean_credit_to_application": 0.11971254861479871,
+        "days_employed": 0.1063002260745932,
+        "annuity": 0.09953779587476931,
+        "credit_amount": 0.09815230383893664
+      },
+      "n_terms": 61
+    },
+    "lightgbm_monotone": {
+      "method": "TreeSHAP (LightGBM pred_contrib)",
+      "rows_explained": 10000,
+      "additivity_max_abs_error_logit": 1.7763568394002505e-14,
+      "additivity_p99_abs_error_logit": 1.1106671138350163e-14,
+      "top10_terms": {
+        "ext_source_2": 0.32457371531436185,
+        "ext_source_3": 0.29772153311697025,
+        "credit_amount": 0.1969638980580512,
+        "ext_source_1": 0.15997960529456445,
+        "goods_price": 0.14978088191893363,
+        "prev_mean_credit_to_application": 0.14432526722766476,
+        "inst_n": 0.1266696091411653,
+        "days_employed": 0.11189040184748855,
+        "credit_to_annuity": 0.1025629733561202,
+        "education": 0.09745144407962758
+      },
+      "n_terms": 61
+    },
+    "catboost": {
+      "method": "TreeSHAP (CatBoost ShapValues)",
+      "rows_explained": 10000,
+      "additivity_max_abs_error_logit": 2.9753977059954195e-14,
+      "additivity_p99_abs_error_logit": 2.065236870407721e-14,
+      "top10_terms": {
+        "ext_source_2": 0.3098622110301572,
+        "ext_source_3": 0.2693390659257184,
+        "ext_source_1": 0.17543077816344352,
+        "goods_price": 0.17107902755246265,
+        "credit_to_annuity": 0.13585256618299704,
+        "days_employed": 0.12197456506937501,
+        "prev_mean_credit_to_application": 0.12053565829136387,
+        "inst_n": 0.11734628291949875,
+        "annuity": 0.10647719277753981,
+        "education": 0.09821762735319788
+      },
+      "n_terms": 61
+    },
+    "xgboost": {
+      "method": "TreeSHAP (XGBoost pred_contribs)",
+      "rows_explained": 10000,
+      "additivity_max_abs_error_logit": 1.0385747404750845e-05,
+      "additivity_p99_abs_error_logit": 5.645775445186638e-06,
+      "top10_terms": {
+        "ext_source_2": 0.3183315934040511,
+        "ext_source_3": 0.2696220234907374,
+        "goods_price": 0.2018472544182092,
+        "ext_source_1": 0.15735321253463627,
+        "credit_to_annuity": 0.1557712589468065,
+        "inst_n": 0.14432969706054136,
+        "prev_mean_credit_to_application": 0.12214266253687092,
+        "annuity": 0.11991673580003262,
+        "days_employed": 0.10624106027740055,
+        "credit_amount": 0.10150653300417835
+      },
+      "n_terms": 61
+    },
+    "ebm": {
+      "method": "EBM additive terms",
+      "rows_explained": 10000,
+      "additivity_max_abs_error_logit": 6.217248937900877e-15,
+      "additivity_p99_abs_error_logit": 3.552713678800501e-15,
+      "top10_terms": {
+        "goods_price": 0.3798574729720869,
+        "ext_source_2": 0.2944140763608688,
+        "ext_source_3": 0.25032087257613966,
+        "credit_to_annuity": 0.21133796825786502,
+        "annuity": 0.20122989487190854,
+        "inst_n": 0.17778661150870595,
+        "ext_source_1": 0.17615610505075055,
+        "credit_amount": 0.1559437411275649,
+        "prev_mean_credit_to_application": 0.11620931784064474,
+        "education": 0.10423246553251915
+      },
+      "n_terms": 71
+    }
+  },
+  "importance_rank_corr_vs_champion": {
+    "scorecard": 0.7511264388706385,
+    "lightgbm_monotone": 0.9374405076679005,
+    "catboost": 0.9116869381279745,
+    "xgboost": 0.9888418826017977,
+    "ebm": 0.901427815970386
+  },
+  "reason_codes": {
+    "population": "test applicants rejected by both champion and scorecard at the valid-fixed cutoff",
+    "n_rejected_champion": 9014,
+    "n_rejected_scorecard": 9208,
+    "n_rejected_both": 6411,
+    "rejection_overlap_jaccard": 0.5427990855981712,
+    "agreement": {
+      "n": 6411.0,
+      "top1_shared": 0.7278115738574326,
+      "mean_jaccard_top3": 0.4177975354858837
+    },
+    "share_with_3_codes": {
+      "lightgbm": 1.0,
+      "scorecard": 1.0
+    },
+    "top1_reason_frequency": {
+      "lightgbm": {
+        "ext_source_2": 0.4144439245047574,
+        "ext_source_3": 0.3713929184214631,
+        "ext_source_1": 0.07830291686164405,
+        "cc_mean_utilisation_6m": 0.05786928716268913,
+        "credit_to_annuity": 0.023085322102636096,
+        "prev_mean_credit_to_application": 0.011230697239120261,
+        "bureau_debt_to_credit": 0.008579004835439089,
+        "bureau_days_since_last_open": 0.006551240056153486,
+        "inst_share_late": 0.005615348619560131,
+        "pos_mean_dpd_def": 0.005303384807362346
+      },
+      "scorecard": {
+        "ext_source_2": 0.6335985025737014,
+        "ext_source_3": 0.3292778037747621,
+        "ext_source_1": 0.036655747933239745,
+        "bureau_debt_to_credit": 0.0004679457182966776
+      }
+    }
+  }
+}

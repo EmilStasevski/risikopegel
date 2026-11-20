@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
+from report_model_card import model_card
 
 RESULTS = Path("results")
 REPORTS = Path("reports")
@@ -138,7 +139,7 @@ def credit_hc_time_proxy() -> str | None:
             f"{_f(max(iv['default_rate_by_id_decile']), 4)} |",
             f"| Adversarial AUC, low vs high ID (5-fold) | {_f(ai['cv5_auc'], 4)} |",
             f"| Adversarial AUC, train vs Kaggle test (5-fold) | {_f(at['cv5_auc'], 4)} |",
-            f"| … without the 2 bureau_balance features | "
+            f"| … without the 4 bureau_balance features | "
             f"{_f(r['adversarial_train_vs_kaggle_test_without_bureau_balance']['cv5_auc'], 4)} |",
             f"| … and without credit/annuity ratio | {_f(abl2['cv5_auc'], 4)} |",
             f"| bureau_balance coverage among applicants with bureau records | "
@@ -208,15 +209,16 @@ def credit_hc_challengers() -> str | None:
         "## Discrimination and calibration on test",
         "",
         "| Model | AUC | Gini | KS | PR-AUC | Brier | Cal. slope | Cal. intercept | ECE | "
-        "ECE after Platt | Train AUC |",
-        "|---|---|---|---|---|---|---|---|---|---|---|",
+        "ECE after Platt | ECE after isotonic | Train AUC |",
+        "|---|---|---|---|---|---|---|---|---|---|---|---|",
     ]
     for k in order:
         t, tp = m[k]["test"], m[k]["test_platt"]
         lines.append(
             f"| {k} | {_f(t['auc'], 4)} | {_f(t['gini'], 4)} | {_f(t['ks'], 4)} | {_f(t['pr_auc'], 4)} | "
             f"{_f(t['brier'], 5)} | {_f(t['calibration_slope'], 3)} | {_f(t['calibration_intercept'], 3)} | "
-            f"{_f(t['ece'], 4)} | {_f(tp['ece'], 4)} | {_f(m[k]['train_auc'], 4)} |"
+            f"{_f(t['ece'], 4)} | {_f(tp['ece'], 4)} | {_f(m[k]['test_isotonic']['ece'], 4)} | "
+            f"{_f(m[k]['train_auc'], 4)} |"
         )
     lines += [
         "",
@@ -287,6 +289,7 @@ def main() -> None:
         "credit_hc_time_proxy.md": credit_hc_time_proxy,
         "data_series.md": data_series,
         "credit_hc_challengers.md": credit_hc_challengers,
+        "model_card_hc_pd.md": model_card,
     }.items():
         text = fn()
         if text is not None:

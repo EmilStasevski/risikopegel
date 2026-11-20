@@ -74,9 +74,14 @@ def main() -> None:
     adv_tt = adversarial_auc(X, tr.astype(int))
     # Ablations: bureau_balance coverage differs sharply between train and Kaggle test (data artefact),
     # and credit/annuity is the strongest single separator. How much shift remains without them?
-    bb = ["bureau_worst_dpd_bucket", "bureau_worst_dpd_bucket_12m"]
+    bb = [
+        "bureau_worst_dpd_bucket",
+        "bureau_worst_dpd_bucket_12m",
+        "bureau_history_status",
+        "bureau_history_coverage",
+    ]
     no_bb = [c for c in X.columns if c not in bb]
-    no_bb_term = [c for c in no_bb if c != "credit_term_years"]
+    no_bb_term = [c for c in no_bb if c != "credit_to_annuity"]
     adv_tt_no_bb = adversarial_auc(X[no_bb], tr.astype(int))
     adv_tt_no_bb_term = adversarial_auc(X[no_bb_term], tr.astype(int))
     has_bureau = df["bureau_n_loans"] > 0

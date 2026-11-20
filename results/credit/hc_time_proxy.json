@@ -1,8 +1,8 @@
 {
-  "utc": "2026-11-20T18:28:51+00:00",
+  "utc": "2026-11-20T19:12:14+00:00",
   "rows_train": 307511,
   "rows_test": 48744,
-  "n_features": 60,
+  "n_features": 62,
   "id_vs_default": {
     "spearman_rho": -0.0021108958524961702,
     "spearman_p": 0.2417733276947246,
@@ -22,7 +22,7 @@
     ]
   },
   "adversarial_low_vs_high_id": {
-    "cv5_auc": 0.5001696788747656,
+    "cv5_auc": 0.4992528898966435,
     "top_univariate_abs_auc_minus_half": {
       "n_bureau_requests_year": 0.004,
       "prev_n_applications": 0.0026,
@@ -32,19 +32,19 @@
     }
   },
   "adversarial_train_vs_kaggle_test": {
-    "cv5_auc": 0.9340894563919754,
+    "cv5_auc": 0.9331301181657693,
     "top_univariate_abs_auc_minus_half": {
-      "credit_term_years": 0.1694,
+      "bureau_history_coverage": 0.2836,
+      "bureau_history_status": 0.2358,
+      "credit_to_annuity": 0.1694,
       "credit_to_income": 0.09,
-      "goods_price": 0.0642,
-      "credit_amount": 0.0612,
-      "prev_n_applications": 0.044
+      "goods_price": 0.0642
     }
   },
   "adversarial_train_vs_kaggle_test_without_bureau_balance": {
-    "cv5_auc": 0.9001161804433653,
+    "cv5_auc": 0.9003604566301542,
     "top_univariate_abs_auc_minus_half": {
-      "credit_term_years": 0.1694,
+      "credit_to_annuity": 0.1694,
       "credit_to_income": 0.09,
       "goods_price": 0.0642,
       "credit_amount": 0.0612,
@@ -52,7 +52,7 @@
     }
   },
   "adversarial_train_vs_kaggle_test_without_bureau_balance_and_credit_annuity": {
-    "cv5_auc": 0.865100736205806,
+    "cv5_auc": 0.8643650570150653,
     "top_univariate_abs_auc_minus_half": {
       "credit_to_income": 0.09,
       "goods_price": 0.0642,

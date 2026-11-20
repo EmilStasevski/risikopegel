@@ -18,7 +18,11 @@ select
     max(b.days_credit)                                   as bureau_days_since_last_open,  -- closest to 0
     min(b.days_credit)                                   as bureau_days_since_first_open,
     max(w.worst_dpd_bucket)                              as bureau_worst_dpd_bucket,
-    max(w.worst_dpd_bucket_12m)                          as bureau_worst_dpd_bucket_12m
+    max(w.worst_dpd_bucket_12m)                          as bureau_worst_dpd_bucket_12m,
+    -- Coverage of the monthly bureau_balance history differs sharply between train and Kaggle test
+    -- (data-collection artefact, docs/data.md). Model the missingness explicitly instead of hiding it in NULLs.
+    count(w.sk_id_bureau)                                as bureau_n_loans_with_history,
+    count(w.sk_id_bureau) / count(*)                     as bureau_history_coverage
 from {{ ref('stg_hc__bureau') }} b
 left join worst w using (sk_id_bureau)
 group by 1

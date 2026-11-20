@@ -1,7 +1,9 @@
 feature,csi
+bureau_history_status,3.9378455485712465
 bureau_worst_dpd_bucket,1.5583318262471422
 bureau_worst_dpd_bucket_12m,1.5463464777522544
-credit_term_years,1.155630718702762
+bureau_history_coverage,1.387485499639195
+credit_to_annuity,1.155630718702762
 contract_type,0.20927360579370527
 credit_to_income,0.114428276918454
 ext_source_1,0.08510128829852909
@@ -19,7 +21,7 @@ inst_n,0.04555946459189801
 inst_share_underpaid,0.04507136321437061
 bureau_days_since_last_open,0.04136914547047598
 inst_share_unpaid,0.04062502973297057
-prev_mean_credit_to_application,0.039721880730946985
+prev_mean_credit_to_application,0.03972257330803183
 prev_n_approved,0.03431050506727152
 annuity,0.03385366363133889
 bureau_days_since_first_open,0.025658244808637203
@@ -48,8 +50,8 @@ days_registration,0.0015344735293089523
 n_family_members,0.0013383041265096992
 bureau_n_active,0.001253566550239321
 bureau_total_overdue,0.0011758440787980084
-bureau_max_days_overdue,0.0011758440787980084
 bureau_n_prolong,0.0011758440787980084
+bureau_max_days_overdue,0.0011758440787980084
 housing_type,0.0010588483837640785
 age_years,0.000889007825437856
 days_birth,0.000886069608096634
