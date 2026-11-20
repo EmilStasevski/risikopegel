@@ -42,3 +42,13 @@ Sources for these checks: [UCI 350](https://archive.ics.uci.edu/dataset/350/defa
 | Known biases / limits | US consumer credit, collection period and population not documented, no application date, so **no out-of-time split** is possible and stability/drift can't be tested. Not a German population |
 | Public reference | Top Kaggle leaderboard AUC 0.86955 (Kaggle CLI leaderboard, fetched 2026-11-20). It's measured on the unlabelled test set, so it can only be compared after a late submission |
 
+
+### Home Credit Default Risk (Kaggle `home-credit-default-risk`)
+
+| Field | Value |
+|---|---|
+| Downloaded | 2026-11-20, Kaggle CLI 2.2.5. Zip 722 MB, 3.2 GB on disk unpacked. The first attempt failed on a DNS error; the retry succeeded |
+| Terms | Kaggle competition rules, accepted by the user; personal, non-commercial use. Not redistributed |
+| Files (lines incl. header, `wc -l`) | application_train 307,512 · application_test 48,745 (no labels) · bureau 1,716,429 · bureau_balance 27,299,926 · previous_application 1,670,215 · POS_CASH_balance 10,001,359 · credit_card_balance 3,840,313 · installments_payments 13,605,402 |
+| Checksums | `data/raw/homecredit/SHA256SUMS` |
+| Known limits | No real application dates (only relative day offsets), so an out-of-time split needs a proxy. To be investigated in R1/R2. Population: Home Credit customers, mainly unbanked/underbanked consumers. Not German |
