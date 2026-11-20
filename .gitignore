@@ -27,3 +27,6 @@ dbt/logs/
 dbt/dbt_packages/
 logs/
 dbt/.user.yml
+
+# run logs
+logs/

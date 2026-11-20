@@ -14,6 +14,10 @@ dependencies = [
     "dbt-core>=1.9",
     "dbt-duckdb>=1.9",
     "duckdb>=1.1",
+    "lightgbm>=4.7.0",
+    "catboost>=1.2.10",
+    "xgboost>=3.4.1",
+    "interpret-core>=0.7.8",
 ]
 
 [dependency-groups]
@@ -43,7 +47,7 @@ mypy_path = "src"
 explicit_package_bases = true
 
 [[tool.mypy.overrides]]
-module = ["sklearn.*", "scipy.*", "optbinning.*"]
+module = ["sklearn.*", "scipy.*", "optbinning.*", "catboost.*", "interpret.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
