@@ -54,3 +54,16 @@ optbinning defines WoE = ln(share of non-defaults / share of defaults), so a hig
 | 9 | 4500 | 0.3379 | 0.3440 |
 
 Bin tables, points per bin and binning summary: `results/credit/gmsc_smoke/*.csv`.
+
+## Kaggle late submission (official test set)
+
+Model: WoE/logistic scorecard, smoke-test config, fitted on all 150,000 cs-training rows. Source: `kaggle competitions submissions -c GiveMeSomeCredit` (Kaggle CLI 2.2.5), read 2026-11-20.
+
+| | AUC |
+|---|---|
+| Kaggle private | 0.84575 |
+| Kaggle public | 0.84217 |
+| Own holdout (smoke test) | 0.84720 |
+| Top of leaderboard | 0.86955 |
+
+Gap to top: 0.02380 AUC vs private score. Caveat: the CLI output does not say whether this is the public or private leaderboard; to verify.

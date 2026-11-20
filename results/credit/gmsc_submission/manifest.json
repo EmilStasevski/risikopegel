@@ -5,5 +5,19 @@
   "rows": 101503,
   "model": "WoE/logistic scorecard, smoke-test config, fitted on all 150,000 cs-training rows",
   "mean_probability": 0.06692120080634921,
-  "kaggle_score": null
+  "kaggle_score": {
+    "public_auc": 0.84217,
+    "private_auc": 0.84575,
+    "submission_refs": [
+      58623924,
+      58624014
+    ],
+    "note": "same file uploaded twice by the user (17:16 and 17:19 UTC), identical scores",
+    "source": "`kaggle competitions submissions -c GiveMeSomeCredit` (Kaggle CLI 2.2.5), read 2026-11-20"
+  },
+  "leaderboard_reference": {
+    "top_auc": 0.86955,
+    "source": "`kaggle competitions leaderboard -c GiveMeSomeCredit --show`, fetched 2026-11-20",
+    "caveat": "the CLI output does not say whether this is the public or private leaderboard; to verify"
+  }
 }

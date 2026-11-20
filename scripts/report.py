@@ -84,6 +84,30 @@ def credit_gmsc_smoke() -> str | None:
         "Bin tables, points per bin and binning summary: `results/credit/gmsc_smoke/*.csv`.",
         "",
     ]
+    sub_path = RESULTS / "credit/gmsc_submission/manifest.json"
+    if sub_path.exists():
+        sub = json.loads(sub_path.read_text())
+        ks, lb = sub.get("kaggle_score"), sub.get("leaderboard_reference")
+        if ks:
+            lines += [
+                "## Kaggle late submission (official test set)",
+                "",
+                f"Model: {sub['model']}. Source: {ks['source']}.",
+                "",
+                "| | AUC |",
+                "|---|---|",
+                f"| Kaggle private | {ks['private_auc']} |",
+                f"| Kaggle public | {ks['public_auc']} |",
+                f"| Own holdout (smoke test) | {_f(h['auc'], 5)} |",
+            ]
+            if lb:
+                lines += [
+                    f"| Top of leaderboard | {lb['top_auc']} |",
+                    "",
+                    f"Gap to top: {_f(lb['top_auc'] - ks['private_auc'], 5)} AUC vs private score. "
+                    f"Caveat: {lb['caveat']}.",
+                ]
+            lines.append("")
     return "\n".join(lines)
 
 
