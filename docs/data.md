@@ -21,6 +21,12 @@ Every dataset gets one entry here: source, date downloaded, license, number of r
 
 Sources for these checks: [UCI 350](https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients), [UCI 144](https://archive.ics.uci.edu/dataset/144), [UCI 522 South German Credit](https://archive.ics.uci.edu/dataset/522/south+german+credit), [ECB usage policy](https://www.ecb.europa.eu/stats/ecb_statistics/governance_and_quality_framework/html/usage_policy.en.html), [Bundesbank ESCB reuse terms](https://www.bundesbank.de/en/homepage/user-information/terms-of-use-regarding-the-reuse-of-escb-statistics-621188), [Kaggle terms](https://kaggle.com/terms), [STOXX DAX conditions of use](https://stoxx.com/legal/dax-conditions-of-use/).
 
+## User approval (2026-11-20)
+
+- **Approved:** ECB/Bundesbank/Eurostat APIs; Kaggle Give Me Some Credit and Home Credit (Home Credit's 2.7 GB was approved explicitly); Stooq DAX prices (download only after Stooq's terms page has been read and recorded here).
+- **Not approved:** the UCI sets (Taiwan, South German Credit). So the smoke-test scorecard (checklist step 4) moves to Give Me Some Credit.
+- **Blocked on:** Kaggle API token (`~/.kaggle/kaggle.json` or `KAGGLE_API_TOKEN`) and accepting both competitions' rules on kaggle.com. Only the user can do either.
+
 ## Downloaded datasets
 
 _(none yet)_
