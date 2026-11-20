@@ -1,0 +1,23 @@
+name: risikopegel
+version: "0.1.0"
+config-version: 2
+profile: risikopegel
+
+model-paths: ["models"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+vars:
+  # Raw Kaggle CSVs (git-ignored). CI points this at synthetic fixtures: --vars '{raw_dir: ...}'
+  raw_dir: "../data/raw"
+
+models:
+  risikopegel:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: table
+    marts:
+      +materialized: table

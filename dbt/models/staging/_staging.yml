@@ -1,0 +1,78 @@
+version: 2
+
+models:
+  - name: stg_gmsc__applicants
+    columns:
+      - name: applicant_id
+        data_tests: [unique, not_null]
+      - name: default_2y
+        data_tests:
+          - not_null
+          - accepted_values: {arguments: {values: [0, 1]}}
+      - name: age
+        data_tests:
+          - between: {arguments: {min_value: 0, max_value: 120}}
+
+  - name: stg_hc__application
+    columns:
+      - name: sk_id_curr
+        data_tests: [unique, not_null]
+      - name: target
+        data_tests:
+          - accepted_values: {arguments: {values: [0, 1]}}
+      - name: days_birth
+        data_tests: [not_null, not_after_application]
+      - name: days_employed
+        data_tests:
+          - not_after_application: {arguments: {strict: false}}
+      - name: ext_source_2
+        data_tests:
+          - between: {arguments: {min_value: 0, max_value: 1}}
+
+  - name: stg_hc__bureau
+    columns:
+      - name: sk_id_bureau
+        data_tests: [unique, not_null]
+      - name: sk_id_curr
+        data_tests:
+          - not_null
+          - relationships: {arguments: {to: ref('stg_hc__application'), field: sk_id_curr}}
+      - name: days_credit
+        data_tests:
+          - not_after_application: {arguments: {strict: false}}
+      - name: days_enddate_fact
+        data_tests:
+          - not_after_application: {arguments: {strict: false}}
+      - name: days_credit_update
+        data_tests:
+          - not_after_application: {arguments: {strict: false}}
+
+  - name: stg_hc__bureau_balance
+    columns:
+      - name: months_balance
+        data_tests: [not_null, not_after_application]
+
+  - name: stg_hc__previous_application
+    columns:
+      - name: sk_id_prev
+        data_tests: [unique, not_null]
+      - name: days_decision
+        data_tests: [not_after_application]
+
+  - name: stg_hc__installments
+    columns:
+      - name: days_instalment
+        data_tests: [not_null, not_after_application]
+      - name: days_entry_payment
+        data_tests:
+          - not_after_application: {arguments: {strict: false}}
+
+  - name: stg_hc__pos_cash
+    columns:
+      - name: months_balance
+        data_tests: [not_null, not_after_application]
+
+  - name: stg_hc__credit_card
+    columns:
+      - name: months_balance
+        data_tests: [not_null, not_after_application]

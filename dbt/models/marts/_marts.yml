@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: mart_hc__applicant_features
+    description: One row per Home Credit application (train + Kaggle test) with pre-application history.
+    columns:
+      - name: sk_id_curr
+        data_tests: [unique, not_null]
+      - name: is_train
+        data_tests: [not_null]
+      - name: bureau_n_loans
+        data_tests: [not_null]
+      - name: inst_share_late
+        data_tests:
+          - between: {arguments: {min_value: 0, max_value: 1}}
+
+  - name: mart_gmsc__applicants
+    columns:
+      - name: applicant_id
+        data_tests: [unique, not_null]

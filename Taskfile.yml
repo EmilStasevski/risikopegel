@@ -36,6 +36,18 @@ tasks:
       - uvx --from kaggle --with six kaggle competitions download -c GiveMeSomeCredit -p data/raw/givemesomecredit
       - cd data/raw/givemesomecredit && unzip -o -q GiveMeSomeCredit.zip
 
+  dbt:build:
+    desc: Build DuckDB marts from data/raw with dbt (models + data tests) -> data/processed/risikopegel.duckdb
+    dir: dbt
+    cmds: [uv run dbt build --profiles-dir .]
+
+  data:homecredit:
+    desc: Download Home Credit via Kaggle CLI (~722 MB zip, 3.2 GB unpacked)
+    cmds:
+      - mkdir -p data/raw/homecredit
+      - uvx --from kaggle --with six kaggle competitions download -c home-credit-default-risk -p data/raw/homecredit
+      - cd data/raw/homecredit && unzip -o -q home-credit-default-risk.zip && sha256sum *.csv > SHA256SUMS
+
   ci:
     desc: What CI runs
     cmds:
