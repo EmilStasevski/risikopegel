@@ -11,7 +11,9 @@ The code is in `src/risikopegel/splits.py` and `src/risikopegel/leakage.py`. The
 | Hyperparameter tuning | Only inside a fold's training window. Purged and embargoed K-fold, or a nested walk-forward | `purged_kfold` |
 | Any split | Must pass `assert_no_lookahead`: no shared rows, and the last training time *including its label window* comes before the first test time | `assert_no_lookahead` |
 
-Random splits are not provided. The only exception is a dataset with no time column at all (e.g. Give Me Some Credit). There a stratified split is allowed, but the report has to say so and cannot make any stability or drift claim based on it.
+Random splits are not provided. The only exception is a dataset with no time column at all. There a stratified split is allowed, but the report has to say so and cannot make any stability or drift claim based on it. Both credit datasets fall under this exception:
+- **Give Me Some Credit:** no time information at all.
+- **Home Credit:** only day offsets relative to each application. The R1 analysis found no time proxy: IDs carry no signal (adversarial AUC 0.500). The Kaggle test set is a shifted population (adversarial AUC 0.934), so Module A uses train vs Kaggle test as its **drift scenario** for PSI/CSI and monitoring, not as a labelled out-of-time test.
 
 All split sizes are counted in unique time points, so rows from the same date always end up on the same side.
 

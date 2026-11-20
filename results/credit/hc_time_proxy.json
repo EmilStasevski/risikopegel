@@ -1,0 +1,44 @@
+{
+  "utc": "2026-11-20T17:30:30+00:00",
+  "rows_train": 307511,
+  "rows_test": 48744,
+  "n_features": 60,
+  "id_vs_default": {
+    "spearman_rho": -0.0021108958524961702,
+    "spearman_p": 0.2417733276947246,
+    "chi2_default_rate_by_id_decile": 6.584983868321892,
+    "chi2_p": 0.6802396410504776,
+    "default_rate_by_id_decile": [
+      0.08012,
+      0.08013,
+      0.0826,
+      0.08286,
+      0.08211,
+      0.08009,
+      0.08088,
+      0.07967,
+      0.07974,
+      0.07909
+    ]
+  },
+  "adversarial_low_vs_high_id": {
+    "cv5_auc": 0.5001696788747656,
+    "top_univariate_abs_auc_minus_half": {
+      "n_bureau_requests_year": 0.004,
+      "prev_n_applications": 0.0026,
+      "bureau_days_since_last_open": 0.0025,
+      "inst_n": 0.0023,
+      "prev_n_approved": 0.0022
+    }
+  },
+  "adversarial_train_vs_kaggle_test": {
+    "cv5_auc": 0.9340894563919754,
+    "top_univariate_abs_auc_minus_half": {
+      "credit_term_years": 0.1694,
+      "credit_to_income": 0.09,
+      "goods_price": 0.0642,
+      "credit_amount": 0.0612,
+      "prev_n_applications": 0.044
+    }
+  }
+}
