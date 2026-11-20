@@ -1,0 +1,121 @@
+# Series catalog for Modules B (market risk) and C (macro forecasting).
+# Sources' reuse terms: docs/data.md. ESCB statistics: "Source: ECB statistics" / Bundesbank, unmodified raw
+# files are kept in data/raw/<source>/; all transformations happen downstream.
+# Every key below is checked by `task data:macro:check` before a full download.
+
+# ---------- market risk: FX and rates (daily) ----------
+[[series]]
+id = "fx_usd"
+source = "ecb"
+flow = "EXR"
+key = "D.USD.EUR.SP00.A"
+desc = "ECB reference rate, USD per EUR"
+module = "market"
+
+[[series]]
+id = "fx_gbp"
+source = "ecb"
+flow = "EXR"
+key = "D.GBP.EUR.SP00.A"
+desc = "ECB reference rate, GBP per EUR"
+module = "market"
+
+[[series]]
+id = "fx_jpy"
+source = "ecb"
+flow = "EXR"
+key = "D.JPY.EUR.SP00.A"
+desc = "ECB reference rate, JPY per EUR"
+module = "market"
+
+[[series]]
+id = "fx_chf"
+source = "ecb"
+flow = "EXR"
+key = "D.CHF.EUR.SP00.A"
+desc = "ECB reference rate, CHF per EUR"
+module = "market"
+
+[[series]]
+id = "yc_aaa_2y"
+source = "ecb"
+flow = "YC"
+key = "B.U2.EUR.4F.G_N_A.SV_C_YM.SR_2Y"
+desc = "Euro area AAA government yield curve, 2y spot rate (%), from 2004-09"
+module = "market"
+
+[[series]]
+id = "yc_aaa_10y"
+source = "ecb"
+flow = "YC"
+key = "B.U2.EUR.4F.G_N_A.SV_C_YM.SR_10Y"
+desc = "Euro area AAA government yield curve, 10y spot rate (%), from 2004-09"
+module = "market"
+
+[[series]]
+id = "fx_usd_bbk"
+source = "bundesbank"
+flow = "BBEX3"
+key = "D.USD.EUR.BB.AC.000"
+desc = "Bundesbank copy of the ECB USD reference rate (cross-check of the two sources)"
+module = "market"
+
+# ---------- macro (monthly) ----------
+# HICP: Eurostat rebased to 2025=100 with COICOP 2018 codes (dataset prc_hicp_minr). The 2015=100 series
+# (ECB ICP/...INX, Eurostat prc_hicp_midx I15) end in 2025-12 (checked 2026-11-20), so they are not used.
+[[series]]
+id = "hicp_de"
+source = "eurostat"
+flow = "prc_hicp_minr"
+key = "M.I25.TOTAL.DE"
+desc = "HICP Germany, all items, 2025=100, not seasonally adjusted"
+module = "macro"
+
+[[series]]
+id = "hicp_ea"
+source = "eurostat"
+flow = "prc_hicp_minr"
+key = "M.I25.TOTAL.EA"
+desc = "HICP euro area (changing composition), all items, 2025=100, not seasonally adjusted"
+module = "macro"
+
+[[series]]
+id = "hicp_energy_de"
+source = "eurostat"
+flow = "prc_hicp_minr"
+key = "M.I25.NRG.DE"
+desc = "HICP Germany, energy, 2025=100, not seasonally adjusted"
+module = "macro"
+
+[[series]]
+id = "unemp_de"
+source = "eurostat"
+flow = "une_rt_m"
+key = "M.SA.TOTAL.PC_ACT.T.DE"
+desc = "Unemployment rate Germany, % of labour force, seasonally adjusted"
+module = "macro"
+
+[[series]]
+id = "unemp_ea"
+source = "eurostat"
+flow = "une_rt_m"
+key = "M.SA.TOTAL.PC_ACT.T.EA21"
+# EA21 = euro area incl. Bulgaria (joined 2026-01-01); Eurostat no longer accepts EA20/EA19 here (HTTP 400, checked 2026-11-20)
+desc = "Unemployment rate euro area (EA21 aggregate), % of labour force, seasonally adjusted"
+module = "macro"
+
+[[series]]
+id = "indprod_de"
+source = "eurostat"
+flow = "sts_inpr_m"
+key = "M.PRD.B-D.SCA.I21.DE"  # indic_bt code is PRD (PROD -> HTTP 400, checked 2026-11-20)
+desc = "Industrial production Germany (B-D), 2021=100, seasonally and calendar adjusted"
+module = "macro"
+
+[[series]]
+id = "retail_de"
+source = "eurostat"
+flow = "sts_trtu_m"
+key = "M.VOL_SLS.G47.SCA.I21.DE"
+desc = "Retail trade volume Germany (G47), 2021=100, seasonally and calendar adjusted"
+module = "macro"

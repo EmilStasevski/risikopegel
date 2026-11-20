@@ -48,6 +48,14 @@ tasks:
       - uvx --from kaggle --with six kaggle competitions download -c home-credit-default-risk -p data/raw/homecredit
       - cd data/raw/homecredit && unzip -o -q home-credit-default-risk.zip && sha256sum *.csv > SHA256SUMS
 
+  data:series:check:
+    desc: Verify every key in config/series.toml with a tiny request (saves nothing)
+    cmds: [uv run python scripts/fetch_series.py --check]
+
+  data:series:
+    desc: Fetch full history of all ECB/Bundesbank/Eurostat series -> data/raw/<source>/
+    cmds: [uv run python scripts/fetch_series.py]
+
   ci:
     desc: What CI runs
     cmds:
