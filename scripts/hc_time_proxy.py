@@ -55,7 +55,8 @@ def main() -> None:
     X = df[feats].copy()
     for c in X.columns:
         if X[c].dtype == object or str(X[c].dtype) in {"string", "str"}:
-            X[c] = X[c].astype("category").cat.codes.replace(-1, np.nan)
+            codes = X[c].astype("category").cat.codes.astype(float)
+            X[c] = codes.where(codes >= 0)  # -1 = missing category
         elif X[c].dtype == bool:
             X[c] = X[c].astype(float)
     X = X.astype(float)
