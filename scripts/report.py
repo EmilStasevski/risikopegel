@@ -118,6 +118,7 @@ def credit_hc_time_proxy() -> str | None:
     r: dict[str, Any] = json.loads(src.read_text())
     iv, ai, at = r["id_vs_default"], r["adversarial_low_vs_high_id"], r["adversarial_train_vs_kaggle_test"]
     top = ", ".join(f"{k} ({v})" for k, v in at["top_univariate_abs_auc_minus_half"].items())
+    abl2 = r["adversarial_train_vs_kaggle_test_without_bureau_balance_and_credit_annuity"]
     return "\n".join(
         [
             "# Home Credit: is there a time proxy?",
@@ -137,12 +138,21 @@ def credit_hc_time_proxy() -> str | None:
             f"{_f(max(iv['default_rate_by_id_decile']), 4)} |",
             f"| Adversarial AUC, low vs high ID (5-fold) | {_f(ai['cv5_auc'], 4)} |",
             f"| Adversarial AUC, train vs Kaggle test (5-fold) | {_f(at['cv5_auc'], 4)} |",
+            f"| … without the 2 bureau_balance features | "
+            f"{_f(r['adversarial_train_vs_kaggle_test_without_bureau_balance']['cv5_auc'], 4)} |",
+            f"| … and without credit/annuity ratio | {_f(abl2['cv5_auc'], 4)} |",
+            f"| bureau_balance coverage among applicants with bureau records | "
+            f"train {_f(r['bureau_balance_coverage_given_bureau_record']['train'], 3)}, "
+            f"Kaggle test {_f(r['bureau_balance_coverage_given_bureau_record']['kaggle_test'], 3)} |",
             "",
             f"Strongest single features separating train from test (|AUC - 0.5|): {top}.",
             "",
             "Reading: SK_ID_CURR carries no time or drift signal, so it can't be used for an "
             "out-of-time split. The Kaggle test set is a *shifted* population (product mix and "
-            "loan terms). That is usable as a drift scenario for PSI/monitoring, but it has no labels.",
+            "loan terms). That is usable as a drift scenario for PSI/monitoring, but it has no labels. "
+            "Part of the separability is a data-coverage artefact: monthly bureau_balance history exists "
+            "for far fewer train applicants than test applicants. The shift stays large without those "
+            "features.",
             "",
         ]
     )

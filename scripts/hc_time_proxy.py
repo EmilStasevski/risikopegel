@@ -72,6 +72,20 @@ def main() -> None:
     high_id = (ids > np.median(ids)).astype(int)
     adv_id = adversarial_auc(X.loc[tr].reset_index(drop=True), high_id)
     adv_tt = adversarial_auc(X, tr.astype(int))
+    # Ablations: bureau_balance coverage differs sharply between train and Kaggle test (data artefact),
+    # and credit/annuity is the strongest single separator. How much shift remains without them?
+    bb = ["bureau_worst_dpd_bucket", "bureau_worst_dpd_bucket_12m"]
+    no_bb = [c for c in X.columns if c not in bb]
+    no_bb_term = [c for c in no_bb if c != "credit_term_years"]
+    adv_tt_no_bb = adversarial_auc(X[no_bb], tr.astype(int))
+    adv_tt_no_bb_term = adversarial_auc(X[no_bb_term], tr.astype(int))
+    has_bureau = df["bureau_n_loans"] > 0
+    bb_cov = {
+        ("train" if k else "kaggle_test"): float(
+            df.loc[has_bureau & (df["is_train"] == k), bb[0]].notna().mean()
+        )
+        for k in (True, False)
+    }
 
     result = {
         "utc": datetime.now(UTC).isoformat(timespec="seconds"),
@@ -87,6 +101,9 @@ def main() -> None:
         },
         "adversarial_low_vs_high_id": adv_id,
         "adversarial_train_vs_kaggle_test": adv_tt,
+        "adversarial_train_vs_kaggle_test_without_bureau_balance": adv_tt_no_bb,
+        "adversarial_train_vs_kaggle_test_without_bureau_balance_and_credit_annuity": adv_tt_no_bb_term,
+        "bureau_balance_coverage_given_bureau_record": bb_cov,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(result, indent=2))

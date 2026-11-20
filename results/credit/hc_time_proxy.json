@@ -1,5 +1,5 @@
 {
-  "utc": "2026-11-20T17:30:30+00:00",
+  "utc": "2026-11-20T18:28:51+00:00",
   "rows_train": 307511,
   "rows_test": 48744,
   "n_features": 60,
@@ -40,5 +40,29 @@
       "credit_amount": 0.0612,
       "prev_n_applications": 0.044
     }
+  },
+  "adversarial_train_vs_kaggle_test_without_bureau_balance": {
+    "cv5_auc": 0.9001161804433653,
+    "top_univariate_abs_auc_minus_half": {
+      "credit_term_years": 0.1694,
+      "credit_to_income": 0.09,
+      "goods_price": 0.0642,
+      "credit_amount": 0.0612,
+      "prev_n_applications": 0.044
+    }
+  },
+  "adversarial_train_vs_kaggle_test_without_bureau_balance_and_credit_annuity": {
+    "cv5_auc": 0.865100736205806,
+    "top_univariate_abs_auc_minus_half": {
+      "credit_to_income": 0.09,
+      "goods_price": 0.0642,
+      "credit_amount": 0.0612,
+      "prev_n_applications": 0.044,
+      "contract_type": 0.0431
+    }
+  },
+  "bureau_balance_coverage_given_bureau_record": {
+    "train": 0.34933394056700445,
+    "kaggle_test": 0.9984168241965974
   }
 }
