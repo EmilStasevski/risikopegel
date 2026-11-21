@@ -2,7 +2,8 @@
 
 Protocol (pre-set, see docs/split_policy.md and docs/hypotheses.md):
 - stratified 64/16/20 train/valid/test (no time proxy exists); seed fixed
-- each model family: small fixed grid, early stopping and selection on valid AUC only
+- each model family: small fixed grid (GRIDS) or, with --params, the Optuna-selected params from
+  scripts/r2_tune.py; early stopping and selection on valid AUC only
 - test is scored once per family with the selected config
 - paired bootstrap (1000 resamples of test) for AUC differences vs the scorecard
 - calibration raw and after Platt scaling fitted on valid
@@ -14,6 +15,7 @@ models + test predictions -> data/processed/hc_challengers/ (git-ignored).
 
 from __future__ import annotations
 
+import argparse
 import json
 import logging
 import pickle
@@ -104,29 +106,31 @@ def platt(
     return lambda p: np.asarray(lr.predict_proba(logit(p))[:, 1], dtype=np.float64)
 
 
-def run_family(name: str, d: HCData, signs: dict[str, int]) -> tuple[Fitted, list[dict[str, Any]]]:
+def fit_family(name: str, params: dict[str, Any], d: HCData, signs: dict[str, int]) -> Fitted:
+    a = (params, d.X_train, d.y_train, d.X_valid, d.y_valid)
+    if name == "scorecard":
+        return fit_scorecard(*a, seed=SEED, categorical=d.categorical)
+    if name == "lightgbm":
+        return fit_lightgbm(*a, seed=SEED)
+    if name == "lightgbm_monotone":
+        return fit_lightgbm(*a, seed=SEED, monotone=signs)
+    if name == "catboost":
+        return fit_catboost(*a, seed=SEED, categorical=d.categorical)
+    if name == "xgboost":
+        return fit_xgboost(*a, seed=SEED)
+    if name == "ebm":
+        return fit_ebm(*a, seed=SEED)
+    raise ValueError(name)
+
+
+def run_family(
+    name: str, d: HCData, signs: dict[str, int], grids: dict[str, dict[str, list[Any]]]
+) -> tuple[Fitted, list[dict[str, Any]]]:
     trials: list[dict[str, Any]] = []
     best: Fitted | None = None
     best_auc = -1.0
-    for params in grid(GRIDS[name]):
-        if name == "scorecard":
-            f = fit_scorecard(
-                params, d.X_train, d.y_train, d.X_valid, d.y_valid, seed=SEED, categorical=d.categorical
-            )
-        elif name == "lightgbm":
-            f = fit_lightgbm(params, d.X_train, d.y_train, d.X_valid, d.y_valid, seed=SEED)
-        elif name == "lightgbm_monotone":
-            f = fit_lightgbm(params, d.X_train, d.y_train, d.X_valid, d.y_valid, seed=SEED, monotone=signs)
-        elif name == "catboost":
-            f = fit_catboost(
-                params, d.X_train, d.y_train, d.X_valid, d.y_valid, seed=SEED, categorical=d.categorical
-            )
-        elif name == "xgboost":
-            f = fit_xgboost(params, d.X_train, d.y_train, d.X_valid, d.y_valid, seed=SEED)
-        elif name == "ebm":
-            f = fit_ebm(params, d.X_train, d.y_train, d.X_valid, d.y_valid, seed=SEED)
-        else:
-            raise ValueError(name)
+    for params in grid(grids[name]):
+        f = fit_family(name, params, d, signs)
         auc_va = float(roc_auc_score(d.y_valid, f.predict(d.X_valid)))
         trials.append(
             {
@@ -146,6 +150,14 @@ def run_family(name: str, d: HCData, signs: dict[str, int]) -> tuple[Fitted, lis
 
 
 def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--params", type=Path, help="best_params.json from scripts/r2_tune.py (replaces GRIDS)")
+    args = ap.parse_args()
+    grids, search = GRIDS, "grid"
+    if args.params:
+        best = json.loads(args.params.read_text())["best_params"]
+        grids = {k: {p: [v] for p, v in best[k].items()} for k in GRIDS}
+        search = f"optuna (TPE), selected params from {args.params}"
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
     OUT.mkdir(parents=True, exist_ok=True)
     ART.mkdir(parents=True, exist_ok=True)
@@ -157,8 +169,8 @@ def main() -> None:
 
     fitted: dict[str, Fitted] = {}
     tuning: dict[str, Any] = {}
-    for name in GRIDS:
-        fitted[name], tuning[name] = run_family(name, d, signs)
+    for name in grids:
+        fitted[name], tuning[name] = run_family(name, d, signs, grids)
     (OUT / "tuning.json").write_text(json.dumps(tuning, indent=2))
 
     rng = np.random.default_rng(SEED)
@@ -256,7 +268,8 @@ def main() -> None:
             "test_default_rate": float(d.y_test.mean()),
         },
         "monotone_signs": signs,
-        "grids": GRIDS,
+        "search": search,
+        "grids": grids,
         "models": res,
         # champion chosen on VALID AUC only (never on test), among the challengers
         "champion": {

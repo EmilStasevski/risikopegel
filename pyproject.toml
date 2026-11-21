@@ -20,6 +20,7 @@ dependencies = [
     "interpret-core>=0.7.8",
     "pyarrow>=26.0.1",
     "matplotlib>=3.11.2",
+    "optuna>=5.0.0,<5.1",
 ]
 
 [dependency-groups]

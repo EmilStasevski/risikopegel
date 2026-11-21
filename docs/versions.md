@@ -14,6 +14,7 @@ The exact pins are in `uv.lock`. This table records what was installed and check
 | scikit-learn | 1.9.1 | uv.lock |
 | ruff / mypy / pytest | 0.17.6 / 2.4.1 / 9.2.0 | dev group |
 | lightgbm / catboost / xgboost / interpret | 4.7.0 / 1.2.10 / 3.4.1 / 0.7.8 | uv.lock (R2). SHAP: the libraries' built-in exact TreeSHAP, not the `shap` package. **XGBoost pitfall:** `Booster.predict(pred_contribs=True)` uses all trees unless `iteration_range` is passed, while the sklearn wrapper predicts with the early-stopped prefix. Fixed in `credit/explain.py` and covered by a test |
+| optuna | 5.0.0 | uv.lock (R2 tuning). Pinned `>=5.0,<5.1`: 5.1.0 came out 2026-11-16, under two weeks before this choice, so the previous release (2026-09-07) is used. TPE sampler, seeded, SQLite storage so the search can resume |
 | matplotlib / pyarrow | 3.11.2 / see uv.lock | figures / parquet artifacts |
 | optbinning | 1.0.0 | uv.lock. Raises pandas-3 deprecation warnings internally (filtered in pytest config). `Scorecard(scaling_method="pdo_odds")` API checked by inspecting the installed version |
 | Kaggle CLI | 2.2.5 | `uvx --from kaggle --with six` (2.2.5 is missing its `six` dependency) |

@@ -213,8 +213,8 @@ def fit_scorecard(
     bp = BinningProcess(
         variable_names=feats,
         categorical_variables=list(categorical),
-        max_n_prebins=20,
-        min_bin_size=0.05,
+        max_n_prebins=int(params.get("max_n_prebins", 20)),
+        min_bin_size=float(params.get("min_bin_size", 0.05)),
         selection_criteria={"iv": {"min": params.get("min_iv", 0.02)}},
         binning_fit_params=fit_params,
         n_jobs=16,

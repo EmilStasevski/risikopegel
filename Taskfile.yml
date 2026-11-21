@@ -56,6 +56,18 @@ tasks:
     desc: Fetch full history of all ECB/Bundesbank/Eurostat series -> data/raw/<source>/
     cmds: [uv run python scripts/fetch_series.py]
 
+  r2:tune:
+    desc: Optuna search for all six PD models (hours; resumable) -> results/credit/hc_tuning/
+    cmds: [uv run python scripts/r2_tune.py]
+
+  r2:tuned:
+    desc: Refit with tuned params, score test once, compare with the grid baseline, explain, figures
+    cmds:
+      - uv run python scripts/r2_challengers.py --params results/credit/hc_tuning/best_params.json
+      - uv run python scripts/r2_compare_grid.py
+      - uv run python scripts/r2_explain.py
+      - uv run python scripts/r2_figures.py
+
   ci:
     desc: What CI runs
     cmds:

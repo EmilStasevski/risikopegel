@@ -1,0 +1,201 @@
+{
+  "run": {
+    "script": "scripts/r2_compare_grid.py",
+    "utc": "2026-11-20T23:59:58+00:00"
+  },
+  "champion": {
+    "grid": "lightgbm",
+    "tuned": "lightgbm"
+  },
+  "families": {
+    "scorecard": {
+      "grid": {
+        "valid_auc": 0.7571814218432409,
+        "test_auc": 0.7522329820363045,
+        "params": {
+          "C": 1.0,
+          "min_iv": 0.02
+        }
+      },
+      "tuned": {
+        "valid_auc": 0.7638565748432706,
+        "test_auc": 0.7586532805231797,
+        "params": {
+          "C": 0.20609049824548953,
+          "min_iv": 0.003468405950541334,
+          "max_n_prebins": 26,
+          "min_bin_size": 0.03494845278461946
+        }
+      },
+      "valid_gain": 0.006675153000029743,
+      "test_tuned_minus_grid": {
+        "auc_diff": 0.006420298486875309,
+        "ci95_low": 0.004422977102932937,
+        "ci95_high": 0.008390977990087659,
+        "share_diff_le_0": 0.0
+      },
+      "tuned_valid_minus_test": 0.005203294320090923,
+      "grid_valid_minus_test": 0.004948439806936378
+    },
+    "lightgbm": {
+      "grid": {
+        "valid_auc": 0.7873095194996415,
+        "test_auc": 0.779527316280289,
+        "params": {
+          "num_leaves": 15,
+          "min_child_samples": 200,
+          "reg_lambda": 5.0
+        }
+      },
+      "tuned": {
+        "valid_auc": 0.7879622535729324,
+        "test_auc": 0.7812398345245757,
+        "params": {
+          "learning_rate": 0.026948927641609742,
+          "num_leaves": 21,
+          "min_child_samples": 38,
+          "reg_lambda": 6.767943238254477,
+          "reg_alpha": 0.7719914976201228,
+          "colsample_bytree": 0.30011546776651277,
+          "subsample": 0.9381622273520457
+        }
+      },
+      "valid_gain": 0.000652734073290917,
+      "test_tuned_minus_grid": {
+        "auc_diff": 0.0017125182442864206,
+        "ci95_low": 0.0004883332581359312,
+        "ci95_high": 0.0030634386850146495,
+        "share_diff_le_0": 0.002
+      },
+      "tuned_valid_minus_test": 0.006722419048356687,
+      "grid_valid_minus_test": 0.007782203219352413
+    },
+    "lightgbm_monotone": {
+      "grid": {
+        "valid_auc": 0.7791428179881322,
+        "test_auc": 0.7718247122122003,
+        "params": {
+          "num_leaves": 31,
+          "min_child_samples": 200,
+          "reg_lambda": 5.0
+        }
+      },
+      "tuned": {
+        "valid_auc": 0.7797272706424521,
+        "test_auc": 0.7728343442834854,
+        "params": {
+          "learning_rate": 0.023003837968105966,
+          "num_leaves": 23,
+          "min_child_samples": 83,
+          "reg_lambda": 13.821485184984605,
+          "reg_alpha": 0.00819474847631891,
+          "colsample_bytree": 0.6312338792546373,
+          "subsample": 0.7685015139043454
+        }
+      },
+      "valid_gain": 0.0005844526543198336,
+      "test_tuned_minus_grid": {
+        "auc_diff": 0.001009632071285238,
+        "ci95_low": 0.00013843838913315534,
+        "ci95_high": 0.0019333335193273179,
+        "share_diff_le_0": 0.01
+      },
+      "tuned_valid_minus_test": 0.006892926358966656,
+      "grid_valid_minus_test": 0.007318105775931949
+    },
+    "catboost": {
+      "grid": {
+        "valid_auc": 0.7829700285371467,
+        "test_auc": 0.7775831364316567,
+        "params": {
+          "depth": 4,
+          "l2_leaf_reg": 10.0
+        }
+      },
+      "tuned": {
+        "valid_auc": 0.7836730315836768,
+        "test_auc": 0.7760805207715816,
+        "params": {
+          "learning_rate": 0.028825947746242715,
+          "depth": 8,
+          "l2_leaf_reg": 20.04508897633751,
+          "random_strength": 1.8015100610986927,
+          "bagging_temperature": 1.0612311095423206,
+          "border_count": 81
+        }
+      },
+      "valid_gain": 0.0007030030465301484,
+      "test_tuned_minus_grid": {
+        "auc_diff": -0.0015026156600750351,
+        "ci95_low": -0.0027185687460858947,
+        "ci95_high": -0.00025952653510117354,
+        "share_diff_le_0": 0.996
+      },
+      "tuned_valid_minus_test": 0.007592510812095221,
+      "grid_valid_minus_test": 0.005386892105490038
+    },
+    "xgboost": {
+      "grid": {
+        "valid_auc": 0.7846963984459867,
+        "test_auc": 0.7792883767325683,
+        "params": {
+          "max_depth": 3,
+          "min_child_weight": 10.0
+        }
+      },
+      "tuned": {
+        "valid_auc": 0.7869436041234028,
+        "test_auc": 0.780637553539462,
+        "params": {
+          "learning_rate": 0.03031169338464009,
+          "max_depth": 3,
+          "min_child_weight": 2.128121692735665,
+          "reg_lambda": 0.3624277719071854,
+          "reg_alpha": 8.93325407402287,
+          "gamma": 0.7630815801281469,
+          "subsample": 0.832274884931555,
+          "colsample_bytree": 0.47295435677729414
+        }
+      },
+      "valid_gain": 0.0022472056774160976,
+      "test_tuned_minus_grid": {
+        "auc_diff": 0.001349176806893726,
+        "ci95_low": 0.00020564863066531991,
+        "ci95_high": 0.0025955627361990362,
+        "share_diff_le_0": 0.01
+      },
+      "tuned_valid_minus_test": 0.006306050583940848,
+      "grid_valid_minus_test": 0.005408021713418365
+    },
+    "ebm": {
+      "grid": {
+        "valid_auc": 0.780061307997459,
+        "test_auc": 0.7767504478001356,
+        "params": {
+          "interactions": 10
+        }
+      },
+      "tuned": {
+        "valid_auc": 0.7806761914431309,
+        "test_auc": 0.776360324386094,
+        "params": {
+          "learning_rate": 0.011249870043808853,
+          "interactions": 19,
+          "max_bins": 1024,
+          "min_samples_leaf": 4,
+          "max_leaves": 3,
+          "smoothing_rounds": 175
+        }
+      },
+      "valid_gain": 0.0006148834456719543,
+      "test_tuned_minus_grid": {
+        "auc_diff": -0.00039012341404154327,
+        "ci95_low": -0.0012749387727128884,
+        "ci95_high": 0.0005128381864755586,
+        "share_diff_le_0": 0.795
+      },
+      "tuned_valid_minus_test": 0.004315867057036904,
+      "grid_valid_minus_test": 0.0033108601973234064
+    }
+  }
+}

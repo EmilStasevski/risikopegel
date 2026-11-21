@@ -148,8 +148,8 @@ def model_card() -> str | None:
         "- No time dimension: evaluation is a stratified split; out-of-time performance is unknown.",
         "- The Kaggle test population is shifted and unlabelled; performance under that shift is unknown.",
         "- Target definition and population differ from a German retail portfolio; results do not transfer.",
-        "- Small tuning grids; the gain over the scorecard may grow slightly with more tuning, which would "
-        "not change the conclusions on calibration and stability.",
+        "- Hyperparameters are selected on one validation split (no nested CV), so the best valid AUC is "
+        "optimistic; the tuned-vs-grid test comparison is in `reports/credit_hc_tuning.md`.",
         "- Group check covers one attribute and does not test for proxy discrimination.",
         "",
     ]
