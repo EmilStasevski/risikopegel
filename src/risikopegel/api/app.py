@@ -20,7 +20,7 @@ RESULTS = ROOT / "results"
 
 app = FastAPI(
     title="Risikopegel",
-    description="Model-risk platform: generated reports and results. Research project, not investment advice.",
+    description="Model-risk platform: generated reports and results. Research only, not investment advice.",
     version="0.1.0",
 )
 
