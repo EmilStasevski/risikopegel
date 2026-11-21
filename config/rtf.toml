@@ -1,0 +1,55 @@
+# Module E: stylised bank for a simplified Risikotragfähigkeit (ICAAP) calculation.
+# EVERY number in this file is an ASSUMPTION chosen for illustration (EUR millions unless stated). None is
+# data about a real bank. Regulatory formulas and parameters are verified in docs/module_e_rtf.md.
+
+[bank]
+name = "Musterbank (stylised)"
+cet1 = 900.0                 # CET1 capital = Tier 1 (no AT1/T2 in this toy bank)
+business_indicator = 350.0   # BI for the operational-risk BIC (CRR Art. 313), EUR m
+
+[credit_book]                # retail consumer loans; PD and relative EAD per loan from Module A (test split)
+ead_total = 4000.0
+lgd = 0.45                   # flat downturn-free LGD assumption (CRR LGD input floor for unsecured other retail: 30%)
+pd_floor = 0.0005            # CRR Art. 163(1)(b): 0.05% for retail other than QRRE revolvers
+n_buckets = 200              # PD buckets for the Monte Carlo (equal-count)
+
+[other_assets]
+fixed_rate_assets = 4800.0   # mortgages and AAA government bonds in the banking book
+fixed_rate_risk_weight = 0.30  # flat standardised-style risk weight (assumption)
+trading_book = 500.0         # Module B FX/rates portfolio, EUR m
+
+[irrbb]                      # repricing cash-flow profile (share of notional repricing in each tenor), assumption
+asset_tenors = [1, 2, 5, 10, 20]
+asset_shares = [0.10, 0.15, 0.30, 0.30, 0.15]
+asset_coupon = 0.025
+deposits = 7000.0            # non-maturity deposits
+deposit_tenors = [0.25, 1, 2, 5]   # behavioural repricing (core deposits capped at 5y average, assumption)
+deposit_shares = [0.40, 0.20, 0.20, 0.20]
+deposit_rate = 0.01
+wholesale = 1400.0
+wholesale_tenors = [0.25, 1, 3]
+wholesale_shares = [0.30, 0.40, 0.30]
+wholesale_rate = 0.025
+
+[economic]
+confidence = 0.999           # 1-year horizon, 99.9% (typical going-concern/gone-concern choice; assumption)
+n_sims = 200000
+seed = 20261121
+market_holding_days = 250    # sqrt-of-time scaling of Module B one-day VaR (assumption; sensitivity: 60 days)
+irrbb_hist_horizon_days = 250 # historical 1-year changes of the ECB AAA curve since 2004 (rolling windows)
+# correlations between risk types for the variance-covariance aggregation (assumption; simple sum also shown)
+corr = { credit_market = 0.5, credit_irrbb = 0.3, credit_op = 0.2, market_irrbb = 0.3, market_op = 0.2, irrbb_op = 0.2 }
+# limit system: share of the risk cover allocated to each risk type (rest is a buffer)
+limits = { credit = 0.50, market = 0.10, irrbb = 0.15, op = 0.10 }
+risk_cover_share_of_cet1 = 1.0   # risk cover = CET1 (no hidden reserves or planned profit counted)
+
+[normative]
+years = 3
+# Pre-provision profit: the consumer book is priced at its expected-loss rate (at today's PDs) plus a spread;
+# other assets earn a net margin. Changed after the first run (2026-11-21): a flat 0.8% return on assets
+# ignored risk-based pricing and made a book with an ~8% PD lose money every year by construction.
+credit_book_spread_over_el = 0.03
+other_assets_net_margin = 0.005
+payout_ratio = 0.3
+cet1_requirement = { pillar1 = 0.045, p2r_cet1 = 0.0084, ccb = 0.025 }  # P2R 1.5% x 56.25% CET1 share (assumption)
+management_buffer = 0.015      # internal target above the requirement (assumption)

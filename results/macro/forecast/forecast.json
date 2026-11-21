@@ -1,0 +1,191 @@
+{
+  "run": {
+    "script": "scripts/r4_forecast.py",
+    "utc": "2026-11-21T15:36:23+00:00",
+    "cpu_count": 16,
+    "idle_package_watts": 2.8648801794413115,
+    "energy_source": "Intel RAPL package-0 (whole CPU package), CPU only, no GPU"
+  },
+  "series": {
+    "hicp_de": {
+      "first": "1996-01",
+      "last": "2026-10",
+      "n": 370,
+      "n_origins": 129,
+      "seasonal_nsa": true
+    },
+    "hicp_ea": {
+      "first": "1996-01",
+      "last": "2026-10",
+      "n": 370,
+      "n_origins": 129,
+      "seasonal_nsa": true
+    },
+    "hicp_energy_de": {
+      "first": "1996-01",
+      "last": "2026-10",
+      "n": 370,
+      "n_origins": 129,
+      "seasonal_nsa": true
+    },
+    "unemp_de": {
+      "first": "1991-01",
+      "last": "2026-09",
+      "n": 429,
+      "n_origins": 128,
+      "seasonal_nsa": false
+    },
+    "unemp_ea": {
+      "first": "2000-01",
+      "last": "2026-09",
+      "n": 321,
+      "n_origins": 128,
+      "seasonal_nsa": false
+    },
+    "indprod_de": {
+      "first": "1991-01",
+      "last": "2026-09",
+      "n": 429,
+      "n_origins": 128,
+      "seasonal_nsa": false
+    },
+    "retail_de": {
+      "first": "1994-01",
+      "last": "2026-09",
+      "n": 393,
+      "n_origins": 128,
+      "seasonal_nsa": false
+    },
+    "bankrupt_de": {
+      "first": "2015-01",
+      "last": "2026-08",
+      "n": 140,
+      "n_origins": 92,
+      "seasonal_nsa": false
+    },
+    "unemp_fr": {
+      "first": "1983-01",
+      "last": "2026-09",
+      "n": 525,
+      "n_origins": 128,
+      "seasonal_nsa": false
+    },
+    "unemp_it": {
+      "first": "1983-01",
+      "last": "2026-09",
+      "n": 525,
+      "n_origins": 128,
+      "seasonal_nsa": false
+    },
+    "unemp_es": {
+      "first": "1986-04",
+      "last": "2026-09",
+      "n": 486,
+      "n_origins": 128,
+      "seasonal_nsa": false
+    },
+    "hicp_fr": {
+      "first": "1996-01",
+      "last": "2026-10",
+      "n": 370,
+      "n_origins": 129,
+      "seasonal_nsa": true
+    },
+    "hicp_it": {
+      "first": "1996-01",
+      "last": "2026-10",
+      "n": 370,
+      "n_origins": 129,
+      "seasonal_nsa": true
+    },
+    "indprod_fr": {
+      "first": "1990-01",
+      "last": "2026-09",
+      "n": 441,
+      "n_origins": 128,
+      "seasonal_nsa": false
+    },
+    "indprod_it": {
+      "first": "1990-01",
+      "last": "2026-09",
+      "n": 441,
+      "n_origins": 128,
+      "seasonal_nsa": false
+    }
+  },
+  "protocol": {
+    "first_origin": "2016-01",
+    "min_train": 48,
+    "horizons": [
+      1,
+      3,
+      12
+    ]
+  },
+  "compute": {
+    "naive": {
+      "seconds": 0.3784506379888626,
+      "joules": 13.148892,
+      "n_forecasts": 1889,
+      "ms_per_forecast": 0.20034443514497755,
+      "joules_per_forecast": 0.006960768660667019,
+      "joules_above_idle_per_forecast": 0.006386805859358809
+    },
+    "seasonal_naive": {
+      "seconds": 0.2835303789906902,
+      "joules": 12.287017,
+      "n_forecasts": 1889,
+      "ms_per_forecast": 0.15009548914276877,
+      "joules_per_forecast": 0.006504508734780307,
+      "joules_above_idle_per_forecast": 0.006074503142911641
+    },
+    "ets": {
+      "seconds": 9.751359584988677,
+      "joules": 580.826271,
+      "n_forecasts": 1889,
+      "ms_per_forecast": 5.162180828474684,
+      "joules_per_forecast": 0.3074781741662255,
+      "joules_above_idle_per_forecast": 0.29268914462803647
+    },
+    "arima": {
+      "seconds": 130.8089515580068,
+      "joules": 8132.357782,
+      "n_forecasts": 1889,
+      "ms_per_forecast": 69.24772448809254,
+      "joules_per_forecast": 4.305112642668078,
+      "joules_above_idle_per_forecast": 4.106726209310729
+    },
+    "lgbm_global": {
+      "seconds": 32.23992751499463,
+      "joules": 712.997565,
+      "n_forecasts": 1889,
+      "ms_per_forecast": 17.06719296717556,
+      "joules_per_forecast": 0.3774470963472737,
+      "joules_above_idle_per_forecast": 0.3285516334969123
+    },
+    "chronos2": {
+      "seconds": 151.16417404099775,
+      "joules": 1241.852717,
+      "n_forecasts": 1889,
+      "ms_per_forecast": 80.02338488141756,
+      "joules_per_forecast": 0.6574127670725252,
+      "joules_above_idle_per_forecast": 0.42815535783394854
+    },
+    "chronos_bolt_small": {
+      "seconds": 34.068442073999904,
+      "joules": 294.459451,
+      "n_forecasts": 1889,
+      "ms_per_forecast": 18.035173146638382,
+      "joules_per_forecast": 0.15588112811011118,
+      "joules_above_idle_per_forecast": 0.10421251802951469
+    },
+    "timesfm25": {
+      "seconds": 509.4327559240046,
+      "joules": 4818.812737,
+      "n_forecasts": 1889,
+      "ms_per_forecast": 269.6838305579696,
+      "joules_per_forecast": 2.5509860968766542,
+      "joules_above_idle_per_forecast": 1.7783742359953183
+    }
+  }
+}

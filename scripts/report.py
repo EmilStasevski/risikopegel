@@ -7,8 +7,12 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
+from report_llm import llm_explanations, llm_text_signal
+from report_macro import credit_ecl, macro_forecast
 from report_market import market_backtest
 from report_model_card import model_card
+from report_readme import update_readmes
+from report_rtf import rtf_report
 from report_validation import validation_report
 
 RESULTS = Path("results")
@@ -349,12 +353,18 @@ def main() -> None:
         "model_card_hc_pd.md": model_card,
         "validation_hc_pd.md": validation_report,
         "market_var_backtest.md": market_backtest,
+        "macro_forecast.md": macro_forecast,
+        "credit_ecl.md": credit_ecl,
+        "rtf.md": rtf_report,
+        "llm_explanations.md": llm_explanations,
+        "llm_text_signal.md": llm_text_signal,
     }.items():
         text = fn()
         if text is not None:
             (REPORTS / name).write_text(text)
             built.append(name)
     print("reports built:", ", ".join(built) or "none")
+    print("README tables updated:", ", ".join(update_readmes()) or "none (results incomplete)")
 
 
 if __name__ == "__main__":

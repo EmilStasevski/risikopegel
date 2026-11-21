@@ -75,6 +75,32 @@ tasks:
       - uv run python scripts/r3_backtest.py
       - uv run python scripts/r3_figures.py
 
+  r4:
+    desc: Macro forecasting benchmark (8 models incl. foundation models, energy) + macro-conditional PD and scenario ECL
+    env: {HF_HUB_OFFLINE: "1"}
+    cmds:
+      - uv run python -W ignore scripts/r4_forecast.py
+      - uv run python -W ignore scripts/r4_ecl.py
+
+  r5:rtf:
+    desc: Module E, Risikotragfähigkeit of the stylised bank (needs R2, R3, R4 outputs)
+    cmds: [uv run python scripts/r5_rtf.py]
+
+  r5:llm:
+    desc: Module D, verified German explanations (needs local Ollama with qwen3:4b) + ECB tone signal test (H5)
+    env: {HF_HUB_OFFLINE: "1"}
+    cmds:
+      - uv run python scripts/r5_explain_llm.py
+      - uv run python scripts/r5_text_signal.py
+
+  dashboard:
+    desc: Streamlit dashboard on results/ (http://localhost:8501)
+    cmds: [uv run --group dashboard streamlit run dashboard/app.py]
+
+  mlflow:
+    desc: Log all module results into the local MLflow store (mlflow.db); view with `uvx mlflow ui --backend-store-uri sqlite:///mlflow.db`
+    cmds: [uv run --group mlops python scripts/mlflow_log.py]
+
   ci:
     desc: What CI runs
     cmds:

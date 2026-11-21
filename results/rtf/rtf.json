@@ -1,0 +1,339 @@
+{
+  "run": {
+    "script": "scripts/r5_rtf.py",
+    "utc": "2026-11-21T15:38:32+00:00"
+  },
+  "config": {
+    "bank": {
+      "name": "Musterbank (stylised)",
+      "cet1": 900.0,
+      "business_indicator": 350.0
+    },
+    "credit_book": {
+      "ead_total": 4000.0,
+      "lgd": 0.45,
+      "pd_floor": 0.0005,
+      "n_buckets": 200
+    },
+    "other_assets": {
+      "fixed_rate_assets": 4800.0,
+      "fixed_rate_risk_weight": 0.3,
+      "trading_book": 500.0
+    },
+    "irrbb": {
+      "asset_tenors": [
+        1,
+        2,
+        5,
+        10,
+        20
+      ],
+      "asset_shares": [
+        0.1,
+        0.15,
+        0.3,
+        0.3,
+        0.15
+      ],
+      "asset_coupon": 0.025,
+      "deposits": 7000.0,
+      "deposit_tenors": [
+        0.25,
+        1,
+        2,
+        5
+      ],
+      "deposit_shares": [
+        0.4,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "deposit_rate": 0.01,
+      "wholesale": 1400.0,
+      "wholesale_tenors": [
+        0.25,
+        1,
+        3
+      ],
+      "wholesale_shares": [
+        0.3,
+        0.4,
+        0.3
+      ],
+      "wholesale_rate": 0.025
+    },
+    "economic": {
+      "confidence": 0.999,
+      "n_sims": 200000,
+      "seed": 20261121,
+      "market_holding_days": 250,
+      "irrbb_hist_horizon_days": 250,
+      "corr": {
+        "credit_market": 0.5,
+        "credit_irrbb": 0.3,
+        "credit_op": 0.2,
+        "market_irrbb": 0.3,
+        "market_op": 0.2,
+        "irrbb_op": 0.2
+      },
+      "limits": {
+        "credit": 0.5,
+        "market": 0.1,
+        "irrbb": 0.15,
+        "op": 0.1
+      },
+      "risk_cover_share_of_cet1": 1.0
+    },
+    "normative": {
+      "years": 3,
+      "credit_book_spread_over_el": 0.03,
+      "other_assets_net_margin": 0.005,
+      "payout_ratio": 0.3,
+      "cet1_requirement": {
+        "pillar1": 0.045,
+        "p2r_cet1": 0.0084,
+        "ccb": 0.025
+      },
+      "management_buffer": 0.015
+    }
+  },
+  "credit": {
+    "n_loans": 61503,
+    "ead": 4000.0,
+    "ead_weighted_pd": 0.07405101374084845,
+    "irb_k": 219.9448587223585,
+    "irb_rwa": 2749.310734029481,
+    "irb_el": 133.29182473352722,
+    "mc": {
+      "el": 133.05858514929795,
+      "var": 349.1834157859718,
+      "es": 381.7190933516194,
+      "ul": 216.12483063667386
+    },
+    "mc_sensitivity": {
+      "rho_x0.5": {
+        "el": 133.11413555713668,
+        "var": 268.2580082143032,
+        "es": 286.0424150911578,
+        "ul": 135.1438726571665
+      },
+      "rho_x1.5": {
+        "el": 133.01611006581984,
+        "var": 424.9893627701648,
+        "es": 470.6037393034723,
+        "ul": 291.973252704345
+      },
+      "lgd_0.30": {
+        "el": 88.7057234328653,
+        "var": 232.7889438573145,
+        "es": 254.47939556774625,
+        "ul": 144.08322042444922
+      }
+    },
+    "mean_correlation": 0.06439413363472753
+  },
+  "market": {
+    "var99_1d_pct": 0.4725189524519166,
+    "var_date": "2026-11-19",
+    "ec": 49.622165340039615,
+    "ec_60d": 24.309797003023597,
+    "own_funds_simplified": 22.41354191017291,
+    "worst_1y_return_pct": -9.000672721720237
+  },
+  "irrbb": {
+    "curve_date": "2026-11-19",
+    "curve": {
+      "0.25": 0.026661574177000002,
+      "1.0": 0.03004228815,
+      "2.0": 0.031250637519,
+      "5.0": 0.031883755314,
+      "10.0": 0.034415130227000004,
+      "20.0": 0.037294567235,
+      "30.0": 0.036923935442000004
+    },
+    "eve_base": -3650.221948328767,
+    "delta_eve_supervisory": {
+      "parallel_up": -284.67365195186085,
+      "parallel_down": 395.0388285837762,
+      "steepener": -181.56929053715794,
+      "flattener": 144.0738200637761,
+      "short_up": 38.69563331443078,
+      "short_down": -39.41553371232294
+    },
+    "worst_scenario": "parallel_up",
+    "worst_delta_eve": -284.67365195186085,
+    "sot_eve_ratio_tier1": 0.3163040577242898,
+    "sot_eve_outlier": true,
+    "delta_nii_parallel": {
+      "parallel_up": -48.3,
+      "parallel_down": 48.3
+    },
+    "sot_nii_ratio_tier1": 0.05366666666666666,
+    "sot_nii_outlier": true,
+    "hist_n_windows": 1086,
+    "hist_first_window": "2004-09-06",
+    "hist_loss_quantile": 348.35133688487434,
+    "hist_worst_loss": 353.6539687266154
+  },
+  "op": {
+    "bic": 42.0,
+    "business_indicator": 350.0
+  },
+  "economic": {
+    "ec": {
+      "credit": 216.12483063667386,
+      "market": 49.622165340039615,
+      "irrbb": 348.35133688487434,
+      "op": 42.0
+    },
+    "total_simple_sum": 656.0983328615878,
+    "total_var_covar": 498.8691035584752,
+    "diversification_pct": 23.964278131504113,
+    "risk_cover": 900.0,
+    "utilisation_sum": 0.7289981476239864,
+    "utilisation_var_covar": 0.5542990039538613,
+    "traffic_light_total": "green",
+    "limits": {
+      "credit": {
+        "limit": 450.0,
+        "use": 0.48027740141483083,
+        "light": "green"
+      },
+      "market": {
+        "limit": 90.0,
+        "use": 0.5513573926671068,
+        "light": "green"
+      },
+      "irrbb": {
+        "limit": 135.0,
+        "use": 2.5803802732212913,
+        "light": "red"
+      },
+      "op": {
+        "limit": 90.0,
+        "use": 0.4666666666666667,
+        "light": "green"
+      }
+    }
+  },
+  "normative": {
+    "requirement": 0.0784,
+    "target": 0.0934,
+    "paths": {
+      "current_macro": [
+        {
+          "year": 0,
+          "cet1": 900.0,
+          "rwa": 4994.480007906643,
+          "ratio": 0.18019893934408215
+        },
+        {
+          "year": 1,
+          "credit_loss": 133.29182473352722,
+          "market_loss": 0.0,
+          "net_income": 146.49999999999994,
+          "cet1": 1002.55,
+          "rwa": 4994.480007906643,
+          "ratio": 0.20073160737712173
+        },
+        {
+          "year": 2,
+          "credit_loss": 133.29182473352722,
+          "market_loss": 0.0,
+          "net_income": 146.49999999999994,
+          "cet1": 1105.1,
+          "rwa": 4994.480007906643,
+          "ratio": 0.22126427541016128
+        },
+        {
+          "year": 3,
+          "credit_loss": 133.29182473352722,
+          "market_loss": 0.0,
+          "net_income": 146.49999999999994,
+          "cet1": 1207.6499999999999,
+          "rwa": 4994.480007906643,
+          "ratio": 0.24179694344320085
+        }
+      ],
+      "adverse": [
+        {
+          "year": 0,
+          "cet1": 900.0,
+          "rwa": 4994.480007906643,
+          "ratio": 0.18019893934408215
+        },
+        {
+          "year": 1,
+          "credit_loss": 198.46921856861542,
+          "market_loss": 45.00336360860119,
+          "net_income": 36.319242556310556,
+          "cet1": 925.4234697894174,
+          "rwa": 5246.18312370588,
+          "ratio": 0.17639938369816235
+        },
+        {
+          "year": 2,
+          "credit_loss": 200.7866099086032,
+          "market_loss": 0.0,
+          "net_income": 79.00521482492397,
+          "cet1": 980.7271201668641,
+          "rwa": 5253.2464412409045,
+          "ratio": 0.1866897224671607
+        },
+        {
+          "year": 3,
+          "credit_loss": 201.4354935559332,
+          "market_loss": 0.0,
+          "net_income": 78.35633117759397,
+          "cet1": 1035.57655199118,
+          "rwa": 5255.203745040584,
+          "ratio": 0.19705735538198102
+        }
+      ],
+      "baseline": [
+        {
+          "year": 0,
+          "cet1": 900.0,
+          "rwa": 4994.480007906643,
+          "ratio": 0.18019893934408215
+        },
+        {
+          "year": 1,
+          "credit_loss": 139.3259844492022,
+          "market_loss": 0.0,
+          "net_income": 140.46584028432497,
+          "cet1": 998.3260881990275,
+          "rwa": 5022.981578851423,
+          "ratio": 0.19875169210302163
+        },
+        {
+          "year": 2,
+          "credit_loss": 140.9645270558793,
+          "market_loss": 0.0,
+          "net_income": 138.82729767764786,
+          "cet1": 1095.505196573381,
+          "rwa": 5030.502314792943,
+          "ratio": 0.21777252608589096
+        },
+        {
+          "year": 3,
+          "credit_loss": 141.42345692968104,
+          "market_loss": 0.0,
+          "net_income": 138.36836780384613,
+          "cet1": 1192.3630540360732,
+          "rwa": 5032.5924684090205,
+          "ratio": 0.23692819585946348
+        }
+      ]
+    },
+    "pre_provision_profit": 279.79182473352716,
+    "min_ratio_current_macro": 0.18019893934408215,
+    "min_ratio_adverse": 0.17639938369816235,
+    "min_ratio_baseline": 0.18019893934408215
+  },
+  "reverse_stress": {
+    "pd_multiplier_breaching_cet1_requirement": 3.4112969026421034,
+    "parallel_up_bp_using_up_risk_cover": 537.3723098079292
+  }
+}

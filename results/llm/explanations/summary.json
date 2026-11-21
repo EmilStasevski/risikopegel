@@ -1,0 +1,130 @@
+{
+  "run": {
+    "script": "scripts/r5_explain_llm.py",
+    "utc": "2026-11-21T16:47:27+00:00",
+    "model": "qwen3:4b-instruct-2507-q4_K_M",
+    "model_digest": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+    "temperature": 0.7,
+    "top_k_facts": 4,
+    "max_retries": 2,
+    "seed": 20261120
+  },
+  "sample": {
+    "champion": "lightgbm",
+    "n": 200,
+    "raw_top4_with_sensitive": 10
+  },
+  "mutation_check": {
+    "flip_direction": {
+      "n": 200,
+      "caught": 200
+    },
+    "unseen_feature": {
+      "n": 200,
+      "caught": 200
+    },
+    "extra_number": {
+      "n": 200,
+      "caught": 200
+    },
+    "forbidden_claim": {
+      "n": 200,
+      "caught": 200
+    },
+    "no_direction": {
+      "n": 200,
+      "caught": 200
+    },
+    "garbled_label": {
+      "n": 200,
+      "caught": 200
+    },
+    "template_pass_rate": 1.0
+  },
+  "variants": {
+    "template": {
+      "n": 200,
+      "pass_rate": 1.0,
+      "hallucination_rate": 0.0,
+      "unseen_feature_rate": 0.0,
+      "wrong_direction_rate": 0.0,
+      "no_direction_rate": 0.0,
+      "number_rate": 0.0,
+      "forbidden_rate": 0.0,
+      "sensitive_rate": 0.0,
+      "shipped_faithful_rate": 1.0,
+      "fallback_rate": 0.0,
+      "mean_attempts": 0.0,
+      "amstad_mean": 60.109865546931296,
+      "words_mean": 43.765,
+      "tokens_out_mean": 0.0,
+      "tokens_in_mean": 0.0,
+      "seconds_per_explanation": 0.00019444081997789907,
+      "gpu_mean_watts": 6.52,
+      "gpu_joules_per_explanation": 0.001267754146255902
+    },
+    "zero_shot": {
+      "n": 200,
+      "pass_rate": 0.91,
+      "hallucination_rate": 0.045,
+      "unseen_feature_rate": 0.045,
+      "wrong_direction_rate": 0.005,
+      "no_direction_rate": 0.005,
+      "number_rate": 0.0,
+      "forbidden_rate": 0.0,
+      "sensitive_rate": 0.0,
+      "shipped_faithful_rate": 0.91,
+      "fallback_rate": 0.0,
+      "mean_attempts": 1.0,
+      "amstad_mean": 57.329915668848436,
+      "words_mean": 40.36,
+      "tokens_out_mean": 84.22,
+      "tokens_in_mean": 312.895,
+      "seconds_per_explanation": 1.0171816877599484,
+      "gpu_mean_watts": 102.42963582677164,
+      "gpu_joules_per_explanation": 104.18954984691247
+    },
+    "few_shot": {
+      "n": 200,
+      "pass_rate": 0.715,
+      "hallucination_rate": 0.005,
+      "unseen_feature_rate": 0.0,
+      "wrong_direction_rate": 0.0,
+      "no_direction_rate": 0.01,
+      "number_rate": 0.005,
+      "forbidden_rate": 0.0,
+      "sensitive_rate": 0.0,
+      "shipped_faithful_rate": 0.715,
+      "fallback_rate": 0.0,
+      "mean_attempts": 1.0,
+      "amstad_mean": 59.3717833656763,
+      "words_mean": 43.195,
+      "tokens_out_mean": 87.375,
+      "tokens_in_mean": 685.895,
+      "seconds_per_explanation": 1.0888855943350064,
+      "gpu_mean_watts": 88.67892873563218,
+      "gpu_joules_per_explanation": 96.56120802129051
+    },
+    "verified_retry": {
+      "n": 200,
+      "pass_rate": 0.985,
+      "hallucination_rate": 0.005,
+      "unseen_feature_rate": 0.005,
+      "wrong_direction_rate": 0.0,
+      "no_direction_rate": 0.0,
+      "number_rate": 0.0,
+      "forbidden_rate": 0.0,
+      "sensitive_rate": 0.0,
+      "shipped_faithful_rate": 1.0,
+      "fallback_rate": 0.015,
+      "mean_attempts": 1.31,
+      "amstad_mean": 59.459634604021815,
+      "words_mean": 43.085,
+      "tokens_out_mean": 114.02,
+      "tokens_in_mean": 945.92,
+      "seconds_per_explanation": 1.4376345263700205,
+      "gpu_mean_watts": 88.14448972483454,
+      "gpu_joules_per_explanation": 126.71956173768963
+    }
+  }
+}

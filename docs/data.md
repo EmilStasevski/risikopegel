@@ -2,7 +2,7 @@
 
 Every dataset gets one entry here: source, date downloaded, license, number of rows, and known biases. The raw data lives in `data/raw/` and is never committed, so the repository does not redistribute it.
 
-**Status 2026-11-20:** nothing has been downloaded yet. The table below lists the candidates with license checks from a web search on 2026-11-20. Each license is checked again on the source page itself at download time.
+**Status 2026-11-21:** the datasets and models under "Downloaded datasets" are in use. The candidates table below is the license check from 2026-11-20 (web search), kept for the record. Each license was checked again on the source page itself at download time.
 
 ## Candidates
 
@@ -67,3 +67,34 @@ Sources for these checks: [Eurostat copyright notice](https://ec.europa.eu/euros
 | Terms | ESCB reuse policy (cite the source, no modification) for ECB and Bundesbank; Eurostat copyright notice (acknowledge the source). Raw responses are stored unmodified with sidecar metadata (URL, time, SHA-256) |
 | Verified while fetching | (1) Eurostat **rebased HICP to 2025 = 100 with COICOP 2018 codes** (`prc_hicp_minr`, all-items code `TOTAL`). The 2015 = 100 series (ECB `ICP/…INX`, Eurostat `prc_hicp_midx` I15) end in 2025-12, so the catalog uses the new dataset. (2) The euro-area aggregate for `une_rt_m` is `EA21` (Bulgaria joined on 2026-01-01). `EA20`/`EA19` return HTTP 400. (3) The industrial-production indicator code is `PRD`, not `PROD`. (4) The ECB and Bundesbank USD reference rates are identical on all 7,141 common days. The Bundesbank series also contains holiday/weekend rows marked `.` (missing) |
 | Known limits | Monthly macro series are final *revised* values, not real-time vintages, so forecasting backtests in Module C carry mild look-ahead from data revisions. This will be stated in Module C, or handled with the Bundesbank real-time database if needed |
+
+### Added series (2026-11-21)
+
+Thirteen more series from the same approved sources and terms, fetched with `task data:series` (`--only`):
+- ECB AAA yield-curve tenors 3m, 1y, 5y, 20y, 30y, for Module E discounting and IRRBB;
+- Eurostat unemployment for FR, IT and ES; HICP for FR and IT; industrial production for FR and IT (Module C);
+- Eurostat `sts_rb_m` German business bankruptcy declarations (`M.BKRT.B-S_X_O_S94.SCA.I21.DE`), the default-rate proxy for the macro-conditional PD. It only starts in **2015-01**, so it does not cover 2008/09.
+
+Periods and counts are in `reports/data_series.md`. Known limit: bankruptcies are firm insolvencies, not retail defaults. Using them for the Home Credit book is an assumption, and the R4 report says so.
+
+### ECB speeches dataset (Module D, H5)
+
+| Field | Value |
+|---|---|
+| Source | ECB, "Download all speeches" (`https://www.ecb.europa.eu/press/key/html/downloads.en.html`), file `all_ECB_speeches.csv` (pipe-separated: date, speakers, title, subtitle, contents). Updated monthly by the ECB |
+| Downloaded | 2026-11-21 (`data/raw/ecb_speeches/FETCHED_UTC`, `SHA256SUMS`), 58.7 MB. One request; robots.txt does not disallow the path |
+| Approval | User approved "ECB speeches + FinBERT" on 2026-11-21 |
+| Terms (checked 2026-11-21) | ECB disclaimer & copyright page: free use of information obtained from the site, with the ECB cited as the source. Reproducing documents that carry authors' names needs prior written authorisation. **Therefore no speech text is reproduced or committed.** Only numeric tone scores per speech date go to `results/` |
+| Known limits | Executive Board speeches only, of differing type and audience. Non-English speeches are filtered out by a stopword heuristic. Tone is not a policy signal |
+
+### Pretrained models (downloaded fresh, approved 2026-11-21; none from ZeilenJoule)
+
+| Model | Use | License | Size | Pinned revision |
+|---|---|---|---|---|
+| amazon/chronos-2 | Module C zero-shot | Apache-2.0 | 478 MB | `29ec3766d36d6f73f0696f85560a422f50e8498c` |
+| amazon/chronos-bolt-small | Module C zero-shot | Apache-2.0 | 191 MB | `772f3d25d38aec6d914c8949dab4462e2d46f5d8` |
+| google/timesfm-2.5-200m-pytorch | Module C zero-shot | Apache-2.0 | 925 MB | `1d952420fba87f3c6dee4f240de0f1a0fbc790e3` |
+| ProsusAI/finbert | Module D tone (H5) | CC BY-NC-SA 4.0: non-commercial use only. This project is non-commercial and does not redistribute the model | 438 MB | `0bc2ac10dda6929bcb1f77ccc43c7ec5c424f031` |
+| qwen3:4b-instruct-2507-q4_K_M (Ollama) | Module D explanations and zero-shot tone | Apache-2.0 (Qwen3) | 2.5 GB, approved explicitly above the 1 GB threshold | Ollama digest recorded in each run's JSON. The tag `qwen3:4b` was pulled first, but it now points to the *thinking* variant (Qwen3-4B-Thinking-2507): ~40 s and ~4,000 tokens per explanation, with no way to turn thinking off. The user approved swapping it for the instruct variant (same size and license, second download); the thinking variant was deleted |
+
+The local Ollama install already held other models (qwen3:8b/14b and others). Following the no-ZeilenJoule rule, none of them is used. qwen3:4b was pulled fresh for this project.

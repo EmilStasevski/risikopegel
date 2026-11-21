@@ -1,0 +1,35 @@
+# Simplified IFRS 9-style ECL and macro-conditional PD (R4). Every value here is an ASSUMPTION, not data:
+# Home Credit has no LGD, EAD, origination PD or dates. The report lists them as such.
+
+[portfolio]
+source = "Home Credit test split (61,503 loans), champion PD (LightGBM), amounts in the dataset's currency units"
+lgd = 0.45                 # flat LGD for unsecured consumer loans (assumption; CRR LGD input floor for unsecured other retail is 30%)
+term_from = "credit_to_annuity"   # remaining term in months ~ credit / monthly annuity (interest ignored)
+term_min_months = 6
+term_max_months = 120
+ead = "credit_amount"      # constant EAD over the life (no amortisation; conservative)
+discounting = "none"       # EIR discounting omitted
+
+[staging]
+# No origination PD exists, so the relative SICR test cannot be applied. Proxy: absolute 12-month PD threshold.
+stage2_pd_threshold = 0.20
+# Stage 3 (defaulted) is empty by construction: the label is a future outcome, not a current status.
+
+[satellite]
+# Default-rate proxy: German business bankruptcy declarations (Eurostat sts_rb_m), log 12-month change,
+# regressed on the 12-month change in German unemployment (pp) and the 12-month log change in German
+# industrial production, with Newey-West (HAC, 12 lags) standard errors.
+target = "bankrupt_de"
+drivers = ["unemp_de", "indprod_de"]
+# COVInsAG: the duty to file for insolvency was suspended from 1 March 2020 and fully reinstated on
+# 1 May 2021 (in phases; verified 2026-11-21, see docs/versions.md). Months in this window get a dummy.
+covid_start = "2020-03"
+covid_end = "2021-04"
+hac_lags = 12
+
+[scenarios]
+# baseline: ETS forecast (Module C) of the drivers from the last observation, 12/24/36 months ahead.
+# adverse: baseline plus the largest historical 12-month deterioration of each driver (since 1991),
+# reached in year 1 and kept (no recovery) in years 2 and 3.
+weights = { baseline = 0.7, adverse = 0.3 }
+years = 3

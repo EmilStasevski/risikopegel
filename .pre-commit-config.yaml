@@ -1,0 +1,32 @@
+# pre-commit hooks run the same tools and versions as CI (from uv.lock), so there is no version drift.
+# Install once: uv run pre-commit install
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-check
+        name: ruff check
+        entry: uv run ruff check --force-exclude
+        language: system
+        types: [python]
+      - id: ruff-format
+        name: ruff format --check
+        entry: uv run ruff format --check --force-exclude
+        language: system
+        types: [python]
+      - id: mypy
+        name: mypy --strict
+        entry: uv run mypy
+        language: system
+        types: [python]
+        pass_filenames: false
+      - id: leakage-tests
+        name: leakage tests
+        entry: uv run pytest -m leakage -q
+        language: system
+        pass_filenames: false
+        files: ^(src/|tests/)
+      - id: no-data-or-secrets
+        name: no raw data, models or secrets
+        entry: "files under data/, models/ or credential files must not be committed"
+        language: fail
+        files: ^(data/(?!.*\.gitkeep$)|models/|.*\.env$|.*kaggle\.json$)

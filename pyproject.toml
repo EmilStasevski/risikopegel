@@ -32,6 +32,10 @@ fm = [
     "timesfm[torch]==3.0.2",
     "transformers>=5.22,<5.23",
 ]
+# Streamlit dashboard (opt-in: `uv run --group dashboard ...`). 1.66.1: newest release at least two weeks old
+dashboard = [
+    "streamlit==1.66.1",
+]
 api = [
     "fastapi==0.162.0",
     "uvicorn==0.54.0",
@@ -42,6 +46,11 @@ dev = [
     "pytest>=8.3",
     "pandas-stubs>=2.2",
     "httpx==0.28.1",
+    "pre-commit==4.7.0",
+]
+# experiment tracking (opt-in: `uv run --group mlops ...`). mlflow-skinny: tracking client without the server stack
+mlops = [
+    "mlflow-skinny==3.18.0",
 ]
 
 [build-system]
@@ -63,6 +72,15 @@ ignore = ["PLR2004", "PLR0913", "N803", "N806"]  # magic values in tests; X/y na
 [tool.ruff.lint.per-file-ignores]
 # report generators: long German/English prose lines and typographic minus signs read better unwrapped
 "scripts/report*.py" = ["E501", "RUF001"]
+# German customer-facing text and prompts: prose lines read better unwrapped
+"src/risikopegel/llm/labels.py" = ["E501"]
+"scripts/r5_explain_llm.py" = ["E501"]
+"tests/test_llm.py" = ["E501"]
+# heavy optional imports (torch, transformers) are loaded lazily on purpose
+"src/risikopegel/forecast/fm.py" = ["PLC0415"]
+"scripts/r4_forecast.py" = ["PLC0415"]
+"scripts/r5_text_signal.py" = ["PLC0415", "E501"]
+"dashboard/*.py" = ["E501", "RUF001"]
 
 [tool.mypy]
 strict = true
@@ -72,7 +90,8 @@ mypy_path = "src:scripts"
 explicit_package_bases = true
 
 [[tool.mypy.overrides]]
-module = ["sklearn.*", "scipy.*", "optbinning.*", "catboost.*", "interpret.*"]
+module = ["sklearn.*", "scipy.*", "optbinning.*", "catboost.*", "interpret.*", "statsmodels.*", "threadpoolctl",
+          "chronos", "chronos.*", "timesfm", "timesfm.*", "streamlit", "mlflow", "mlflow.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
