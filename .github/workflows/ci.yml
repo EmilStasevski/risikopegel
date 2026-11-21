@@ -22,3 +22,43 @@ jobs:
       - run: uv run mypy
       # offline fixtures only: no network access needed by any test
       - run: uv run pytest
+
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: hashicorp/setup-terraform@v4.0.1
+        with:
+          terraform_version: 1.17.2
+          terraform_wrapper: false
+      - name: terraform fmt + validate (no backend, no Azure access)
+        working-directory: infra/azure
+        run: |
+          terraform fmt -check -recursive
+          terraform init -backend=false -input=false
+          terraform validate
+
+  image:
+    # build on every push/PR (catches Dockerfile breakage); push to GHCR only from main
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: build
+        run: |
+          IMG=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/risikopegel-api
+          docker build --build-arg GIT_SHA=${GITHUB_SHA::7} -t $IMG:${GITHUB_SHA::7} -t $IMG:latest .
+          docker run -d --rm -p 8000:8000 --name api $IMG:${GITHUB_SHA::7}
+          for i in $(seq 30); do curl -sf localhost:8000/health && break; sleep 1; done
+          curl -sf localhost:8000/reports/validation_hc_pd.md > /dev/null
+          docker stop api
+      - name: push
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          IMG=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/risikopegel-api
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          docker push $IMG:${GITHUB_SHA::7}
+          docker push $IMG:latest

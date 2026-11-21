@@ -1,0 +1,19 @@
+# Keep the build context small and free of licensed data, secrets and models.
+.git
+.venv
+data
+models
+mlruns
+logs
+submissions
+dbt
+notebooks
+.env
+*.key
+kaggle.json
+**/__pycache__
+.mypy_cache
+.ruff_cache
+.pytest_cache
+infra/**/.terraform
+infra/**/*.tfstate*

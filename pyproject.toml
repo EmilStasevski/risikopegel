@@ -24,7 +24,17 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["ruff>=0.9", "mypy>=1.14", "pytest>=8.3", "pandas-stubs>=2.2"]
+api = [
+    "fastapi==0.162.0",
+    "uvicorn==0.54.0",
+]
+dev = [
+    "ruff>=0.9",
+    "mypy>=1.14",
+    "pytest>=8.3",
+    "pandas-stubs>=2.2",
+    "httpx==0.28.1",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -65,3 +75,6 @@ filterwarnings = [
     # pandas-3 deprecations raised inside optbinning 1.0.0, not in our code
     "ignore::Warning:optbinning.*",
 ]
+
+[tool.uv]
+default-groups = ["dev", "api"]

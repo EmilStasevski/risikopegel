@@ -30,3 +30,9 @@ dbt/.user.yml
 
 # run logs
 logs/
+
+# terraform
+infra/**/.terraform/
+infra/**/*.tfstate*
+infra/**/terraform.tfvars
+infra/**/*.tfplan
