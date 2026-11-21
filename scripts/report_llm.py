@@ -144,7 +144,7 @@ def llm_text_signal() -> str | None:
         f"- Corpus: {c['n_speeches']} English ECB speeches, {c['first']} to {c['last']} (ECB speeches dataset, fetched "
         f"{c['dataset_fetched_utc']}). Texts stay local; only scores are stored (`results/llm/text_signal/tone_scores.csv`).",
         f"- Tone measures: an own short economic lexicon (positive minus negative stems); FinBERT (`{run['finbert']}`) "
-        f"on the first 64 sentences; `{run['llm']}` zero-shot on the first 6,000 characters (integer −2..+2). The LLM "
+        f"on 16 evenly spaced sentences (64 tokens each, a CPU budget); `{run['llm']}` zero-shot on the first 6,000 characters (integer −2..+2). The LLM "
         f"could not be parsed for {s['llm_scoring']['unparseable']} speeches. Cost: "
         f"{s['llm_scoring']['seconds_per_speech']:.2f} s and {s['llm_scoring']['gpu_joules_per_speech']:.0f} GPU J per speech.",
         f"- Weekly targets ({s['weeks']['first']} to {s['weeks']['last']}): (A) log realised volatility of the Module B "

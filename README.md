@@ -9,6 +9,17 @@ A model-risk platform written in the style of bank model documentation: credit r
 ## Headline results
 
 <!-- BEGIN GENERATED: scripts/report_readme.py -->
+
+| Module | Headline (all numbers generated from `results/`) |
+|---|---|
+| A, credit PD (Home Credit) | lightgbm vs WoE scorecard: Gini 0.562 vs 0.517, ΔAUC +0.023 [+0.019, +0.026]; calibration slope 0.99 vs 0.99, ECE 0.0041 vs 0.0020; score PSI 0.0043 vs 0.0006 |
+| B, VaR/ES backtesting | 10 models, ECB FX/rates portfolio, 2008-08-01 to 2026-11-19: 99% VaR passes Kupiec + Christoffersen in 17/19 years for FHS GARCH-t vs 10 (historical simulation), 11 (normal), at most 12 (ML) |
+| C, macro forecasting | 15 Eurostat series, 8 models incl. Chronos-2, Chronos-Bolt, TimesFM 2.5: h=1 MASE TimesFM 0.315 vs ETS 0.324 (DM p = 0.27); energy per forecast ETS 0.29 J, TimesFM 1.78 J, Chronos-Bolt 0.10 J |
+| A+C, scenario ECL | macro-conditional PD: ECL coverage 4.01% (baseline) vs 5.52% (adverse) |
+| E, Risikotragfähigkeit | stylised bank: risk-cover use 73% (green); adverse minimum CET1 ratio 17.6% vs 7.84% required; reverse stress: PD × 3.41; IRRBB EVE outlier: yes |
+| D, LLM explanations | 200 German explanations: 91.0% faithful zero-shot, 98.5% with verifier + retry, 100.0% of shipped texts verified |
+| D, ECB tone signal | best out-of-sample MSE ratio 0.999 (llm, dy2; DM p = 0.54) |
+
 <!-- END GENERATED -->
 
 Pre-registered hypotheses and their verdicts: [`docs/hypotheses.md`](docs/hypotheses.md).

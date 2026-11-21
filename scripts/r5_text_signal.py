@@ -4,7 +4,7 @@ Protocol (fixed before the run):
 - corpus: ECB speeches dataset (ECB website, monthly snapshot; docs/data.md), English speeches dated within
   the market-data period; texts stay local, only numeric scores are stored
 - tone per speech, three measures: (1) dictionary baseline (own short economic lexicon, defined below),
-  (2) FinBERT (ProsusAI/finbert, CPU) averaged over the first 64 sentences, (3) LLM zero-shot (qwen3:4b,
+  (2) FinBERT (ProsusAI/finbert, CPU) averaged over 16 evenly spaced sentences, (3) LLM zero-shot (Qwen3-4B-Instruct,
   local Ollama) on the first 6,000 characters, integer -2..+2
 - weekly targets (Fri-Fri): (A) log realised volatility of the Module B portfolio, (B) log of the absolute
   weekly change of the 2-year AAA yield (rate-expectation changes); prediction for week w+1
@@ -40,6 +40,9 @@ CACHE = Path("data/processed/text_signal")
 MODEL = "qwen3:4b-instruct-2507-q4_K_M"
 FINBERT = ("ProsusAI/finbert", "0bc2ac10dda6929bcb1f77ccc43c7ec5c424f031")
 FIRST_OOS = pd.Timestamp("2013-01-01")
+# CPU budget: 16 evenly spaced sentences per speech, 64 tokens each (the first run with the first 64 sentences
+# at 96 tokens was stopped after 9 CPU-hours without finishing)
+FINBERT_SENTENCES = 16
 
 # Own minimal lexicon (not a licensed dictionary), fixed before the run. Stems match by prefix.
 NEG = [
@@ -123,13 +126,22 @@ def finbert_tone(texts: list[str]) -> list[float]:
     tok = AutoTokenizer.from_pretrained(path)
     mdl = AutoModelForSequenceClassification.from_pretrained(path).eval()
     lab = {v.lower(): int(k) for k, v in mdl.config.id2label.items()}
+    torch.set_num_threads(16)
     out = []
-    for t in texts:
-        sents = [s for s in re.split(r"(?<=[.!?])\s+", t) if 40 < len(s) < 600][:64]
+    for i, t in enumerate(texts):
+        sents = [s for s in re.split(r"(?<=[.!?])\s+", t) if 40 < len(s) < 600]
+        if not sents:
+            out.append(float("nan"))
+            continue
+        pick = np.unique(np.linspace(0, len(sents) - 1, min(FINBERT_SENTENCES, len(sents))).astype(int))
         with torch.no_grad():
-            enc = tok(sents, padding=True, truncation=True, max_length=96, return_tensors="pt")
+            enc = tok(
+                [sents[j] for j in pick], padding=True, truncation=True, max_length=64, return_tensors="pt"
+            )
             p = torch.softmax(mdl(**enc).logits, dim=1).numpy()
         out.append(float((p[:, lab["positive"]] - p[:, lab["negative"]]).mean()))
+        if i % 250 == 0:
+            print(f"finbert {i}/{len(texts)}", flush=True)
     return out
 
 
@@ -218,7 +230,12 @@ def main() -> None:
         llm_meta = json.loads((CACHE / "llm_meta.json").read_text())
     else:
         scores = pd.DataFrame({"date": sp["date"], "dictionary": sp["contents"].map(dictionary_tone)})
-        scores["finbert"] = finbert_tone(sp["contents"].tolist())
+        fb_cache = CACHE / "finbert.parquet"
+        if fb_cache.exists():
+            scores["finbert"] = pd.read_parquet(fb_cache)["finbert"].to_numpy()
+        else:
+            scores["finbert"] = finbert_tone(sp["contents"].tolist())
+            scores[["finbert"]].to_parquet(fb_cache)
         print("finbert done", flush=True)
         scores["llm"], llm_meta = llm_tone(sp["contents"].tolist())
         scores.to_parquet(cache)

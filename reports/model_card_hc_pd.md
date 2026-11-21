@@ -63,6 +63,7 @@ Gender is not a model input; the table shows outcomes by group only. Differences
 - Rank agreement of global importance with other models (Spearman): scorecard 0.83, lightgbm_monotone 0.94, catboost 0.94, xgboost 0.98, ebm 0.90.
 - Reason codes (top-3 risk-increasing terms) for the 6,895 test applicants declined by both champion and scorecard: same top reason in 0.718 of cases, mean Jaccard of top-3 0.374. Declined-set overlap (Jaccard) 0.609.
 - Scorecard reason codes use points lost vs the best bin; champion codes use contributions vs the average applicant (SHAP convention). Both conventions are defensible; they are not identical.
+- Customer explanations (Module D, `reports/llm_explanations.md`): in 10 of 200 sampled applicants a protected-like attribute (age, family status, children, household size) is among the four largest SHAP contributions. The explanation generator skips them; the model still uses them, which is a review point for the AI-Act high-risk classification of credit scoring. Verified LLM explanations: 100% of shipped texts pass the deterministic verifier.
 
 ![Importance](figures/hc_importance.png)
 

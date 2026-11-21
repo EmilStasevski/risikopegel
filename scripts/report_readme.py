@@ -112,8 +112,8 @@ def block_en(f: dict[str, Any]) -> str:
             f"| E, Risikotragfähigkeit | stylised bank: risk-cover use {f['rtf_use']:.0%} ({f['rtf_light']}); adverse "
             f"minimum CET1 ratio {f['rtf_min_adv']:.1%} vs {f['rtf_req']:.2%} required; reverse stress: PD × {f['rev_pd']:.2f}; "
             f"IRRBB EVE outlier: {'yes' if f['irrbb_outlier'] else 'no'} |",
-            f"| D, LLM explanations | {f['n_expl']} German explanations: {f['faith_zero']:.0%} faithful zero-shot, "
-            f"{f['faith_ver']:.0%} with verifier + retry, {f['ship_ver']:.0%} of shipped texts verified |",
+            f"| D, LLM explanations | {f['n_expl']} German explanations: {f['faith_zero']:.1%} faithful zero-shot, "
+            f"{f['faith_ver']:.1%} with verifier + retry, {f['ship_ver']:.1%} of shipped texts verified |",
             f"| D, ECB tone signal | best out-of-sample MSE ratio {f['sig_ratio']:.3f} ({f['sig_m']}, {f['sig_t']}; DM p = "
             f"{f['sig_p']:.2f}) |",
             "",
@@ -146,11 +146,11 @@ def block_de(f: dict[str, Any]) -> str:
             f"Energie je Prognose ETS {nf(f['j_ets'], 2)} J, TimesFM {nf(f['j_tfm'], 2)} J, Chronos-Bolt {nf(f['j_bolt'], 2)} J |",
             f"| A+C, Szenario-ECL | makrobedingte PD: ECL-Deckung {nf(f['ecl_cov_base'], 2)} % (Basis) vs. "
             f"{nf(f['ecl_cov_adv'], 2)} % (adverses Szenario) |",
-            f"| E, Risikotragfähigkeit | Musterbank: Auslastung des Risikodeckungspotenzials {pc(f['rtf_use'])} ({f['rtf_light']}); "
+            f"| E, Risikotragfähigkeit | Musterbank: Auslastung des Risikodeckungspotenzials {pc(f['rtf_use'])} ({ {'green': 'grün', 'amber': 'gelb', 'red': 'rot'}[f['rtf_light']] }); "
             f"minimale harte Kernkapitalquote adverses Szenario {pc(f['rtf_min_adv'], 1)} vs. {pc(f['rtf_req'], 2)} Anforderung; "
             f"inverser Stresstest: PD × {nf(f['rev_pd'], 2)}; IRRBB-Ausreißer (EVE): {'ja' if f['irrbb_outlier'] else 'nein'} |",
-            f"| D, LLM-Erklärungen | {f['n_expl']} deutsche Erklärungen: {pc(f['faith_zero'])} faithful (zero-shot), "
-            f"{pc(f['faith_ver'])} mit Verifier + Retry, {pc(f['ship_ver'])} der ausgelieferten Texte verifiziert |",
+            f"| D, LLM-Erklärungen | {f['n_expl']} deutsche Erklärungen: {pc(f['faith_zero'], 1)} modelltreu (zero-shot), "
+            f"{pc(f['faith_ver'], 1)} mit Verifier + Retry, {pc(f['ship_ver'], 1)} der ausgelieferten Texte verifiziert |",
             f"| D, EZB-Tonalität | bestes Out-of-Sample-MSE-Verhältnis {nf(f['sig_ratio'])} ({f['sig_m']}, {f['sig_t']}; "
             f"DM p = {nf(f['sig_p'], 2)}) |",
             "",

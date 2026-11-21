@@ -126,6 +126,7 @@ def model_card() -> str | None:
         f"Declined-set overlap (Jaccard) {_f(rc['rejection_overlap_jaccard'], 3)}.",
         "- Scorecard reason codes use points lost vs the best bin; champion codes use contributions vs "
         "the average applicant (SHAP convention). Both conventions are defensible; they are not identical.",
+        *_llm_lines(),
         "",
         "![Importance](figures/hc_importance.png)",
         "",
@@ -154,3 +155,20 @@ def model_card() -> str | None:
         "",
     ]
     return "\n".join(L)
+
+
+def _llm_lines() -> list[str]:
+    """Customer-explanation finding from Module D (results/llm/explanations), if that run exists."""
+    p = Path("results/llm/explanations/summary.json")
+    if not p.exists():
+        return []
+    s = json.loads(p.read_text())
+    n, k = s["sample"]["n"], s["sample"]["raw_top4_with_sensitive"]
+    v = s["variants"]["verified_retry"]
+    return [
+        f"- Customer explanations (Module D, `reports/llm_explanations.md`): in {k} of {n} sampled applicants a "
+        "protected-like attribute (age, family status, children, household size) is among the four largest "
+        "SHAP contributions. The explanation generator skips them; the model still uses them, which is a "
+        "review point for the AI-Act high-risk classification of credit scoring. Verified LLM explanations: "
+        f"{v['shipped_faithful_rate']:.0%} of shipped texts pass the deterministic verifier.",
+    ]

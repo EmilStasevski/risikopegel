@@ -9,6 +9,17 @@ Eine Modellrisiko-Plattform im Stil bankfachlicher Modelldokumentation: Kreditri
 ## Kernergebnisse
 
 <!-- BEGIN GENERATED: scripts/report_readme.py -->
+
+| Modul | Kernergebnis (alle Zahlen aus `results/` erzeugt) |
+|---|---|
+| A, Kredit-PD (Home Credit) | lightgbm vs. WoE-Scorecard: Gini 0,562 vs. 0,517, ΔAUC 0,023 [0,019; 0,026]; Kalibrierungssteigung 0,99 vs. 0,99, ECE 0,0041 vs. 0,0020; Score-PSI 0,0043 vs. 0,0006 |
+| B, VaR/ES-Backtesting | 10 Modelle, EZB-FX/Zins-Portfolio, 2008-08-01 bis 2026-11-19: 99-%-VaR besteht Kupiec + Christoffersen in 17/19 Jahren mit FHS GARCH-t vs. 10 (historische Simulation), 11 (Normalverteilung), höchstens 12 (ML) |
+| C, Makroprognosen | 15 Eurostat-Reihen, 8 Modelle inkl. Chronos-2, Chronos-Bolt, TimesFM 2.5: MASE h=1 TimesFM 0,315 vs. ETS 0,324 (DM p = 0,27); Energie je Prognose ETS 0,29 J, TimesFM 1,78 J, Chronos-Bolt 0,10 J |
+| A+C, Szenario-ECL | makrobedingte PD: ECL-Deckung 4,01 % (Basis) vs. 5,52 % (adverses Szenario) |
+| E, Risikotragfähigkeit | Musterbank: Auslastung des Risikodeckungspotenzials 73 % (grün); minimale harte Kernkapitalquote adverses Szenario 17,6 % vs. 7,84 % Anforderung; inverser Stresstest: PD × 3,41; IRRBB-Ausreißer (EVE): ja |
+| D, LLM-Erklärungen | 200 deutsche Erklärungen: 91,0 % modelltreu (zero-shot), 98,5 % mit Verifier + Retry, 100,0 % der ausgelieferten Texte verifiziert |
+| D, EZB-Tonalität | bestes Out-of-Sample-MSE-Verhältnis 0,999 (llm, dy2; DM p = 0,54) |
+
 <!-- END GENERATED -->
 
 Vorab festgelegte Hypothesen und Ergebnisse: [`docs/hypotheses.md`](docs/hypotheses.md) (englisch).

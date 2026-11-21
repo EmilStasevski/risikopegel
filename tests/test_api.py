@@ -41,3 +41,13 @@ def test_rtf_asrf_matches_irb_formula() -> None:
     k = float((irb_retail_k(pds, 0.45) * shares * 1000).sum())
     ul = credit_ul(list(zip(pds.tolist(), shares.tolist(), strict=True)), 1000, 0.45, 0.999, 1.0)["ul"]
     assert ul == pytest.approx(k, rel=1e-9)
+
+
+def test_rtf_endpoint_defaults_and_override() -> None:
+    base = client.get("/rtf")
+    assert base.status_code == 200
+    b = base.json()
+    assert b["traffic_light"] in {"green", "amber", "red"}
+    worse = client.get("/rtf", params={"lgd": 0.9}).json()
+    assert worse["ec"]["credit"] > b["ec"]["credit"]
+    assert client.get("/rtf", params={"lgd": 2}).status_code == 422
