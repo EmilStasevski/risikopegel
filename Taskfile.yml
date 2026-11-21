@@ -69,6 +69,12 @@ tasks:
       - uv run python scripts/r2_figures.py
       - uv run python scripts/r2_validate.py
 
+  r3:
+    desc: VaR/ES rolling forecasts (10 models x 3 windows, 2 portfolios) + full backtest suite + figures (~5 min)
+    cmds:
+      - uv run python scripts/r3_backtest.py
+      - uv run python scripts/r3_figures.py
+
   ci:
     desc: What CI runs
     cmds:

@@ -1,4 +1,0 @@
-# copy to terraform.tfvars (git-ignored) and fill in; alert_email via TF_VAR_alert_email
-subscription_id = "00000000-0000-0000-0000-000000000000"
-image           = "ghcr.io/OWNER/risikopegel-api:SHA"
-budget_start    = "2026-11-01T00:00:00Z"

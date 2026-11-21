@@ -22,15 +22,21 @@ It is a teaching-scale model of an ICAAP. It is not a bank's RTF concept. Every 
 5. **Outputs:**
    - `results/rtf/*.json`;
    - `reports/rtf.md` (RTF table, limit use, sensitivities);
-   - an API endpoint `/rtf` that recomputes the economic perspective for user-supplied assumptions (deployed on Azure, see `docs/azure.md`).
+   - an API endpoint `/rtf` that recomputes the economic perspective for user-supplied assumptions.
 
 ## Regulatory facts: status
 
+All rows below were checked on 2026-11-21 against the primary text. The PDFs were downloaded from EUR-Lex. Formula images were rendered and read page by page, not taken from summaries.
+
 | Fact | Status | Source |
 |---|---|---|
-| RTF guideline: normative perspective (capital planning ≥ 3 years) and economic perspective (1 year, internal methods); MaRisk AT 4.1 Tz. 2 | verified 2026-11-21 (whether the 2018 guideline is still unchanged is not checked) | BaFin/Bundesbank RTF-Leitfaden, 24 May 2018 |
-| CRR Art. 154(3): retail exposures secured by immovable property use correlation R = 0.15; Art. 154(4): qualifying revolving retail exposures use R = 0.04 | **verified 2026-11-21**, verbatim from the 2013 adopted text (later revisions not read) | [CRR Art. 154](https://legislation.gov.uk/eur/2013/575/article/154/adopted) |
-| CRR Art. 154(1): "other retail" correlation R = 0.03·(1−e^(−35·PD))/(1−e^(−35)) + 0.16·[1 − (1−e^(−35·PD))/(1−e^(−35))]; RW = (LGD·N[(G(PD) + √R·G(0.999))/√(1−R)] − LGD·PD)·12.5·1.06; no maturity adjustment for retail | **open**: the formulas are images on the official page, and only a secondary summary was read. Must be checked against the CRR text (EUR-Lex) before implementation | secondary summary only |
-| IRRBB: six supervisory shock scenarios for EVE (parallel up/down, steepener, flattener, short up/down), two for NII (parallel up/down); EVE outlier test at 15 % of Tier 1; decay parameter x = 4 | verified 2026-11-21 from the BCBS Basel Framework SRP31 (in force 2026-01-01) via a page summary. The EU version is in Delegated Regulation (EU) 2024/856 (not read; EUR-Lex fetch failed) | [BCBS SRP31](https://www.bis.org/committees/bcbs/basel-framework/standard/srp/31/inforce/2026-01-01/published/2024-07-16) |
-| EUR shock sizes (bp) for parallel / short / long | **open**: SRP31 (2026) apparently gives 225 / 350 / 200 (from a summary, not verbatim). This differs from the 200 / 250 / 100 recalled from the 2016 standard, which was not verified. The EU 2024/856 calibration is unknown. Resolve before implementation | |
-| Post-shock interest-rate floor; NII outlier threshold | **open** | |
+| RTF guideline: normative perspective (capital planning ≥ 3 years) and economic perspective (1 year, internal methods); MaRisk AT 4.1 Tz. 2 | verified (whether the 2018 guideline is still unchanged is not checked) | BaFin/Bundesbank RTF-Leitfaden, 24 May 2018 |
+| CRR Art. 154(1)(ii), retail, PD < 1: RW = (LGD·N[G(PD)/√(1−R) + √(R/(1−R))·G(0.999)] − LGD·PD)·12.5. **No 1.06 scaling factor** in the current text (amended by CRR3, marker M17). No maturity adjustment for retail | **verified**, consolidated CRR 26.06.2026, p. 234 | [CRR consolidated 26.06.2026](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:02013R0575-20260626) |
+| CRR Art. 154(1): other retail R = 0.03·(1−e^(−35·PD))/(1−e^(−35)) + 0.16·[1 − (1−e^(−35·PD))/(1−e^(−35))]; Art. 154(3): residential property R = 0.15; Art. 154(4): QRRE R = 0.04 | **verified**, pp. 234–235 | [CRR consolidated 26.06.2026](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:02013R0575-20260626) |
+| CRR Art. 163(1): PD input floor 0.05 % for retail other than QRRE revolvers (0.1 % for QRRE revolvers). Art. 164(4) Table 1: LGD input floor 30 % for unsecured other retail | **verified**, pp. 246–248 | [CRR consolidated 26.06.2026](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:02013R0575-20260626) |
+| CRR Art. 92(1): CET1 4.5 %, Tier 1 6 %, total capital 8 %, leverage 3 %. CRD Art. 129: capital conservation buffer 2.5 % CET1 | **verified** | [CRR consolidated 26.06.2026](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:02013R0575-20260626); [CRD consolidated 17.01.2025](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:02013L0036-20250117) |
+| CRR Art. 312–313 (operational risk, CRR3): own funds requirement = BIC = 0.12·BI for BI ≤ €1 bn (0.12 + 0.15·(BI−1) up to €30 bn) | **verified**, p. 450 | [CRR consolidated 26.06.2026](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:02013R0575-20260626) |
+| IRRBB, Delegated Reg. (EU) 2024/856. Art. 1: six EVE scenarios (parallel up/down, steepener, flattener, short up/down), NII uses the two parallel ones. Art. 2: ΔR_short(t) = ±R_short·e^(−t/4), ΔR_long(t) = ±R_long·(1−e^(−t/4)), steepener = −0.65·abs(ΔR_short) + 0.9·abs(ΔR_long), flattener = +0.8·abs(ΔR_short) − 0.6·abs(ΔR_long) | **verified** (OJ L 24.4.2024) | [Reg. (EU) 2024/856](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32024R0856) |
+| EUR shock sizes, Annex Part A: parallel 200 bp, short 250 bp, long 100 bp. These apply in the EU. BCBS SRP31 (in force 2026) recalibrated EUR, apparently to 225/350/200 per a page summary; that is not used here | **verified** (EU); BCBS values not verified | same |
+| Art. 3(6) run-off balance sheet; Art. 3(7) post-shock floor −150 bp at immediate maturity, +3 bp per year, 0 % from 50 years; Art. 3(8) positive EVE changes weighted at 50 % | **verified** | same |
+| Outlier thresholds: ΔEVE decline > 15 % of Tier 1 (CRD Art. 98(5)(a)); NII decline > 5 % of Tier 1 (Reg. 2024/856 Art. 5(1)) | **verified** | CRD consolidated 17.01.2025; Reg. 2024/856 |

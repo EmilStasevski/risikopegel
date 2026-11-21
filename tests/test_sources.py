@@ -64,4 +64,4 @@ def test_build_url() -> None:
 def test_catalog_is_valid() -> None:
     cat = load_catalog(Path(__file__).resolve().parents[1] / "config/series.toml")
     assert len(cat) >= 10
-    assert {s.module for s in cat} == {"market", "macro"}
+    assert {s.module for s in cat} == {"market", "macro", "rtf"}

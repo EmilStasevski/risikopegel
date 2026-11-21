@@ -1,0 +1,57 @@
+# Module B: market-risk portfolio and backtest settings (all assumptions, documented in the R3 report).
+# Investor: EUR-based. Assets built from ECB data only (no equity prices: Stooq terms were never cleared).
+#   fx_*   : long 1 unit of foreign-currency cash; EUR value = 1 / (foreign per EUR); interest carry ignored
+#   bond_* : constant-maturity zero-coupon AAA bond, price exp(-y*T); daily log return
+#            = -T * dy + y * dt  (carry), roll-down ignored
+
+[portfolio]
+start = "2004-09-06"  # first day of the ECB yield-curve series
+
+[portfolio.weights]          # main portfolio: fixed weights, rebalanced daily
+fx_usd = 0.20
+fx_gbp = 0.10
+fx_jpy = 0.10
+fx_chf = 0.10
+bond_2y = 0.20
+bond_10y = 0.30
+
+[portfolio.weights_equal]    # robustness: equal weights
+fx_usd = 0.1666666666666667
+fx_gbp = 0.1666666666666667
+fx_jpy = 0.1666666666666667
+fx_chf = 0.1666666666666667
+bond_2y = 0.1666666666666667
+bond_10y = 0.1666666666666667
+
+[backtest]
+levels = [0.99, 0.975]       # VaR confidence levels; ES at 0.975 (FRTB basis, MAR33.3)
+window = 1000                # main rolling estimation window (trading days)
+windows_sensitivity = [250, 500, 1000]
+ml_refit_every = 20          # LightGBM quantile models are refitted every 20 days
+alpha = 0.05
+
+# Stress regimes, fixed before looking at any backtest result (calendar dates of well-known episodes).
+[[backtest.regimes]]
+name = "GFC"
+start = "2008-09-01"
+end = "2009-06-30"
+
+[[backtest.regimes]]
+name = "Euro crisis"
+start = "2011-07-01"
+end = "2012-09-30"
+
+[[backtest.regimes]]
+name = "SNB floor removal"
+start = "2015-01-01"
+end = "2015-03-31"
+
+[[backtest.regimes]]
+name = "Covid"
+start = "2020-02-15"
+end = "2020-06-30"
+
+[[backtest.regimes]]
+name = "Rates shock"
+start = "2022-01-01"
+end = "2022-12-31"

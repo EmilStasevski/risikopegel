@@ -1,0 +1,312 @@
+{
+  "run": {
+    "script": "scripts/r3_backtest.py",
+    "utc": "2026-11-21T14:39:59+00:00",
+    "arch": "8.0.0"
+  },
+  "config": {
+    "portfolio": {
+      "start": "2004-09-06",
+      "weights": {
+        "fx_usd": 0.2,
+        "fx_gbp": 0.1,
+        "fx_jpy": 0.1,
+        "fx_chf": 0.1,
+        "bond_2y": 0.2,
+        "bond_10y": 0.3
+      },
+      "weights_equal": {
+        "fx_usd": 0.1666666666666667,
+        "fx_gbp": 0.1666666666666667,
+        "fx_jpy": 0.1666666666666667,
+        "fx_chf": 0.1666666666666667,
+        "bond_2y": 0.1666666666666667,
+        "bond_10y": 0.1666666666666667
+      }
+    },
+    "backtest": {
+      "levels": [
+        0.99,
+        0.975
+      ],
+      "window": 1000,
+      "windows_sensitivity": [
+        250,
+        500,
+        1000
+      ],
+      "ml_refit_every": 20,
+      "alpha": 0.05,
+      "regimes": [
+        {
+          "name": "GFC",
+          "start": "2008-09-01",
+          "end": "2009-06-30"
+        },
+        {
+          "name": "Euro crisis",
+          "start": "2011-07-01",
+          "end": "2012-09-30"
+        },
+        {
+          "name": "SNB floor removal",
+          "start": "2015-01-01",
+          "end": "2015-03-31"
+        },
+        {
+          "name": "Covid",
+          "start": "2020-02-15",
+          "end": "2020-06-30"
+        },
+        {
+          "name": "Rates shock",
+          "start": "2022-01-01",
+          "end": "2022-12-31"
+        }
+      ]
+    }
+  },
+  "data": {
+    "first_return": "2004-09-07",
+    "last_return": "2026-11-19",
+    "n_returns": 5677,
+    "first_forecast": "2008-08-01",
+    "n_forecast_days": 4677,
+    "portfolio_daily_sd_pct": 0.2589574128395128,
+    "asset_daily_sd_pct": {
+      "fx_usd": 0.5513013923143385,
+      "fx_gbp": 0.4734637305292039,
+      "fx_jpy": 0.6785770977921963,
+      "fx_chf": 0.4289766991460356,
+      "bond_2y": 0.07586273282550612,
+      "bond_10y": 0.41021324174248625
+    },
+    "worst_day": "2025-03-05",
+    "worst_day_loss_pct": 1.4786552232493984
+  },
+  "zone_counts_250_99": {
+    "amber_from": 5,
+    "red_from": 10
+  },
+  "zone_counts_250_975": {
+    "amber_from": 11,
+    "red_from": 17
+  },
+  "comparisons": {
+    "reference": "fhs_garch_t",
+    "window": 1000,
+    "dm_pinball_0.99": {
+      "evt_garch_t": {
+        "mean_diff": -3.222250366738239e-05,
+        "stat": -1.260531775137416,
+        "p_two_sided": 0.20747759270490462
+      },
+      "ewma": {
+        "mean_diff": 0.00013816296149498668,
+        "stat": 1.2153773161855699,
+        "p_two_sided": 0.22422221558045075
+      },
+      "garch_t": {
+        "mean_diff": 5.028510389424796e-05,
+        "stat": 0.7215936251022693,
+        "p_two_sided": 0.470544359684127
+      },
+      "gjr_t": {
+        "mean_diff": 7.316539789470752e-05,
+        "stat": 0.9855896365112848,
+        "p_two_sided": 0.32433452560284615
+      },
+      "historical": {
+        "mean_diff": 0.001183925528690915,
+        "stat": 4.0450815015923105,
+        "p_two_sided": 5.230492434780191e-05
+      },
+      "lgbm_quantile": {
+        "mean_diff": 0.0012810688281120644,
+        "stat": 4.141343716421221,
+        "p_two_sided": 3.452770960215199e-05
+      },
+      "lgbm_vol_fhs": {
+        "mean_diff": 0.00042580959673365265,
+        "stat": 2.3649137004430143,
+        "p_two_sided": 0.01803427277153205
+      },
+      "normal": {
+        "mean_diff": 0.0013930496362786076,
+        "stat": 3.8843959404770025,
+        "p_two_sided": 0.00010258461673945396
+      },
+      "student_t": {
+        "mean_diff": 0.001206500849768032,
+        "stat": 4.674956803972887,
+        "p_two_sided": 2.9401549792483802e-06
+      }
+    },
+    "mcs_pinball_0.99": {
+      "included": [
+        "evt_garch_t",
+        "ewma",
+        "fhs_garch_t",
+        "garch_t",
+        "gjr_t"
+      ],
+      "pvalues": {
+        "lgbm_quantile": 0.0035,
+        "student_t": 0.0035,
+        "historical": 0.0145,
+        "normal": 0.0225,
+        "lgbm_vol_fhs": 0.065,
+        "gjr_t": 0.4105,
+        "ewma": 0.4105,
+        "garch_t": 0.4105,
+        "fhs_garch_t": 0.4105,
+        "evt_garch_t": 1.0
+      }
+    },
+    "dm_pinball_0.975": {
+      "evt_garch_t": {
+        "mean_diff": 1.6708031987306572e-05,
+        "stat": 0.6158398318499917,
+        "p_two_sided": 0.5380002355749588
+      },
+      "ewma": {
+        "mean_diff": 0.00013975912594447123,
+        "stat": 1.357811020018651,
+        "p_two_sided": 0.17452365725208852
+      },
+      "garch_t": {
+        "mean_diff": 0.00015009345176370082,
+        "stat": 1.8903323490326687,
+        "p_two_sided": 0.05871352495425596
+      },
+      "gjr_t": {
+        "mean_diff": 0.00022569200507811042,
+        "stat": 2.5265059618345846,
+        "p_two_sided": 0.011520343307725611
+      },
+      "historical": {
+        "mean_diff": 0.0022669800858304925,
+        "stat": 5.141043070816517,
+        "p_two_sided": 2.7321740698114597e-07
+      },
+      "lgbm_quantile": {
+        "mean_diff": 0.0013906925279807431,
+        "stat": 3.992866209333083,
+        "p_two_sided": 6.527940473791545e-05
+      },
+      "lgbm_vol_fhs": {
+        "mean_diff": 0.0005890581045252003,
+        "stat": 2.7118809526350507,
+        "p_two_sided": 0.006690261565524142
+      },
+      "normal": {
+        "mean_diff": 0.002295297125174926,
+        "stat": 5.320677431461823,
+        "p_two_sided": 1.0338156506501251e-07
+      },
+      "student_t": {
+        "mean_diff": 0.0022678791106716077,
+        "stat": 5.494831556117916,
+        "p_two_sided": 3.9108351860283015e-08
+      }
+    },
+    "mcs_pinball_0.975": {
+      "included": [
+        "evt_garch_t",
+        "ewma",
+        "fhs_garch_t",
+        "garch_t"
+      ],
+      "pvalues": {
+        "student_t": 0.001,
+        "normal": 0.0025,
+        "historical": 0.0035,
+        "lgbm_quantile": 0.0035,
+        "gjr_t": 0.066,
+        "lgbm_vol_fhs": 0.066,
+        "garch_t": 0.133,
+        "ewma": 0.306,
+        "evt_garch_t": 0.557,
+        "fhs_garch_t": 1.0
+      }
+    },
+    "dm_fz0_0.975": {
+      "evt_garch_t": {
+        "mean_diff": 0.0009654081091730529,
+        "stat": 0.5023197762448128,
+        "p_two_sided": 0.6154426002817164
+      },
+      "ewma": {
+        "mean_diff": 0.019779423099120886,
+        "stat": 1.584326999902477,
+        "p_two_sided": 0.11311932463356808
+      },
+      "garch_t": {
+        "mean_diff": 0.00774592164914007,
+        "stat": 1.0167815956570612,
+        "p_two_sided": 0.30925733922375775
+      },
+      "gjr_t": {
+        "mean_diff": 0.011157570041579808,
+        "stat": 1.3280087299728442,
+        "p_two_sided": 0.18417522292949806
+      },
+      "historical": {
+        "mean_diff": 0.18112365989311383,
+        "stat": 5.271043585832553,
+        "p_two_sided": 1.3565024896674192e-07
+      },
+      "lgbm_vol_fhs": {
+        "mean_diff": 0.06562779871795607,
+        "stat": 2.9373585920098573,
+        "p_two_sided": 0.0033102109685512917
+      },
+      "normal": {
+        "mean_diff": 0.19302141614507987,
+        "stat": 5.321749159038493,
+        "p_two_sided": 1.0277422296187193e-07
+      },
+      "student_t": {
+        "mean_diff": 0.1769497437166712,
+        "stat": 5.799822507997272,
+        "p_two_sided": 6.638514739270671e-09
+      }
+    },
+    "mcs_fz0_0.975": {
+      "included": [
+        "evt_garch_t",
+        "ewma",
+        "fhs_garch_t",
+        "garch_t",
+        "gjr_t"
+      ],
+      "pvalues": {
+        "student_t": 0.0005,
+        "normal": 0.0035,
+        "historical": 0.0035,
+        "lgbm_vol_fhs": 0.0445,
+        "ewma": 0.3675,
+        "gjr_t": 0.4115,
+        "garch_t": 0.4635,
+        "evt_garch_t": 0.617,
+        "fhs_garch_t": 1.0
+      }
+    }
+  },
+  "shuffled_label_real": {
+    "level": 0.99,
+    "window": 1000,
+    "lgbm_real": {
+      "pinball": 0.008871876389051249,
+      "rate": 0.026512721830233055
+    },
+    "lgbm_shuffled": {
+      "pinball": 0.01023680501869561,
+      "rate": 0.031216591832371177
+    },
+    "historical": {
+      "pinball": 0.008774733089630097,
+      "rate": 0.013470173187940988
+    }
+  }
+}

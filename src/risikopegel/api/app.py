@@ -1,4 +1,4 @@
-"""FastAPI app served from the container (local Docker or Azure Container Apps).
+"""FastAPI app served from the container (local Docker).
 
 Read-only and stateless. It serves only what is committed to the repo: the generated reports (Markdown)
 and the aggregate results (JSON). No licensed row-level data and no trained models are in the image.

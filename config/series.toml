@@ -119,3 +119,109 @@ flow = "sts_trtu_m"
 key = "M.VOL_SLS.G47.SCA.I21.DE"
 desc = "Retail trade volume Germany (G47), 2021=100, seasonally and calendar adjusted"
 module = "macro"
+
+# ---------- added 2026-11-21: more yield-curve tenors (Module E IRRBB discounting) ----------
+[[series]]
+id = "yc_aaa_3m"
+source = "ecb"
+flow = "YC"
+key = "B.U2.EUR.4F.G_N_A.SV_C_YM.SR_3M"
+desc = "Euro area AAA government yield curve, 3m spot rate (%)"
+module = "rtf"
+
+[[series]]
+id = "yc_aaa_1y"
+source = "ecb"
+flow = "YC"
+key = "B.U2.EUR.4F.G_N_A.SV_C_YM.SR_1Y"
+desc = "Euro area AAA government yield curve, 1y spot rate (%)"
+module = "rtf"
+
+[[series]]
+id = "yc_aaa_5y"
+source = "ecb"
+flow = "YC"
+key = "B.U2.EUR.4F.G_N_A.SV_C_YM.SR_5Y"
+desc = "Euro area AAA government yield curve, 5y spot rate (%)"
+module = "rtf"
+
+[[series]]
+id = "yc_aaa_20y"
+source = "ecb"
+flow = "YC"
+key = "B.U2.EUR.4F.G_N_A.SV_C_YM.SR_20Y"
+desc = "Euro area AAA government yield curve, 20y spot rate (%)"
+module = "rtf"
+
+[[series]]
+id = "yc_aaa_30y"
+source = "ecb"
+flow = "YC"
+key = "B.U2.EUR.4F.G_N_A.SV_C_YM.SR_30Y"
+desc = "Euro area AAA government yield curve, 30y spot rate (%)"
+module = "rtf"
+
+# ---------- added 2026-11-21: more macro series (Module C) and a default proxy (macro-conditional PD) ----------
+[[series]]
+id = "bankrupt_de"
+source = "eurostat"
+flow = "sts_rb_m"
+key = "M.BKRT.B-S_X_O_S94.SCA.I21.DE"
+desc = "Bankruptcy declarations Germany, business economy excl. holding activities (B-S_X_O_S94), 2021=100, seasonally and calendar adjusted"
+module = "macro"
+
+[[series]]
+id = "unemp_fr"
+source = "eurostat"
+flow = "une_rt_m"
+key = "M.SA.TOTAL.PC_ACT.T.FR"
+desc = "Unemployment rate France, % of labour force, seasonally adjusted"
+module = "macro"
+
+[[series]]
+id = "unemp_it"
+source = "eurostat"
+flow = "une_rt_m"
+key = "M.SA.TOTAL.PC_ACT.T.IT"
+desc = "Unemployment rate Italy, % of labour force, seasonally adjusted"
+module = "macro"
+
+[[series]]
+id = "unemp_es"
+source = "eurostat"
+flow = "une_rt_m"
+key = "M.SA.TOTAL.PC_ACT.T.ES"
+desc = "Unemployment rate Spain, % of labour force, seasonally adjusted"
+module = "macro"
+
+[[series]]
+id = "hicp_fr"
+source = "eurostat"
+flow = "prc_hicp_minr"
+key = "M.I25.TOTAL.FR"
+desc = "HICP France, all items, 2025=100, not seasonally adjusted"
+module = "macro"
+
+[[series]]
+id = "hicp_it"
+source = "eurostat"
+flow = "prc_hicp_minr"
+key = "M.I25.TOTAL.IT"
+desc = "HICP Italy, all items, 2025=100, not seasonally adjusted"
+module = "macro"
+
+[[series]]
+id = "indprod_fr"
+source = "eurostat"
+flow = "sts_inpr_m"
+key = "M.PRD.B-D.SCA.I21.FR"
+desc = "Industrial production France (B-D), 2021=100, seasonally and calendar adjusted"
+module = "macro"
+
+[[series]]
+id = "indprod_it"
+source = "eurostat"
+flow = "sts_inpr_m"
+key = "M.PRD.B-D.SCA.I21.IT"
+desc = "Industrial production Italy (B-D), 2021=100, seasonally and calendar adjusted"
+module = "macro"

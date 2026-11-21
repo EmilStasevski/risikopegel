@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
+from report_market import market_backtest
 from report_model_card import model_card
 from report_validation import validation_report
 
@@ -347,6 +348,7 @@ def main() -> None:
         "credit_hc_tuning.md": credit_hc_tuning,
         "model_card_hc_pd.md": model_card,
         "validation_hc_pd.md": validation_report,
+        "market_var_backtest.md": market_backtest,
     }.items():
         text = fn()
         if text is not None:
