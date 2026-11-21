@@ -67,6 +67,7 @@ tasks:
       - uv run python scripts/r2_compare_grid.py
       - uv run python scripts/r2_explain.py
       - uv run python scripts/r2_figures.py
+      - uv run python scripts/r2_validate.py
 
   ci:
     desc: What CI runs

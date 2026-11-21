@@ -1,0 +1,428 @@
+{
+  "run": {
+    "script": "scripts/r2_validate.py",
+    "utc": "2026-11-21T10:14:09+00:00",
+    "alpha": 0.05,
+    "n_grades": 10,
+    "split_seeds": [
+      11,
+      22,
+      33
+    ]
+  },
+  "champion": "lightgbm",
+  "champion_params": {
+    "learning_rate": 0.026948927641609742,
+    "num_leaves": 21,
+    "min_child_samples": 38,
+    "reg_lambda": 6.767943238254477,
+    "reg_alpha": 0.7719914976201228,
+    "colsample_bytree": 0.30011546776651277,
+    "subsample": 0.9381622273520457
+  },
+  "reproducibility": {
+    "lightgbm": {
+      "max_abs_diff_vs_stored": 0.0,
+      "labels_identical": true
+    },
+    "scorecard": {
+      "max_abs_diff_vs_stored": 0.0,
+      "labels_identical": true
+    }
+  },
+  "grades": {
+    "lightgbm": {
+      "grades": [
+        {
+          "grade": 1,
+          "n": 6301,
+          "defaults": 48,
+          "mean_pd": 0.010045524714181608,
+          "default_rate": 0.0076178384383431205,
+          "jeffreys_p": 0.9770788100427027
+        },
+        {
+          "grade": 2,
+          "n": 6333,
+          "defaults": 112,
+          "mean_pd": 0.017619450783962834,
+          "default_rate": 0.01768514132322754,
+          "jeffreys_p": 0.4780393741314389
+        },
+        {
+          "grade": 3,
+          "n": 6167,
+          "defaults": 149,
+          "mean_pd": 0.024544884385467272,
+          "default_rate": 0.02416085616993676,
+          "jeffreys_p": 0.5723307598957441
+        },
+        {
+          "grade": 4,
+          "n": 5917,
+          "defaults": 181,
+          "mean_pd": 0.03236614310661563,
+          "default_rate": 0.030589825925299984,
+          "jeffreys_p": 0.7786106011265032
+        },
+        {
+          "grade": 5,
+          "n": 6190,
+          "defaults": 261,
+          "mean_pd": 0.041900254180142704,
+          "default_rate": 0.042164781906300484,
+          "jeffreys_p": 0.4548372916773909
+        },
+        {
+          "grade": 6,
+          "n": 6107,
+          "defaults": 354,
+          "mean_pd": 0.05437068080330441,
+          "default_rate": 0.05796626821680039,
+          "jeffreys_p": 0.10842305634151515
+        },
+        {
+          "grade": 7,
+          "n": 6258,
+          "defaults": 463,
+          "mean_pd": 0.07196613194919477,
+          "default_rate": 0.07398529881751359,
+          "jeffreys_p": 0.26684361881930335
+        },
+        {
+          "grade": 8,
+          "n": 6258,
+          "defaults": 695,
+          "mean_pd": 0.09929056458472932,
+          "default_rate": 0.11105784595717481,
+          "jeffreys_p": 0.0010839393129015778
+        },
+        {
+          "grade": 9,
+          "n": 5949,
+          "defaults": 941,
+          "mean_pd": 0.14923065145306275,
+          "default_rate": 0.15817784501596907,
+          "jeffreys_p": 0.02708941328692397
+        },
+        {
+          "grade": 10,
+          "n": 6023,
+          "defaults": 1761,
+          "mean_pd": 0.3012037891543248,
+          "default_rate": 0.29237921301676906,
+          "jeffreys_p": 0.9325574432859032
+        }
+      ],
+      "n_rejected_underestimation": 2,
+      "n_rejected_overestimation": 1,
+      "default_rate_monotone": true,
+      "spearman_grade_vs_default_rate": 0.9999999999999999,
+      "n_rejected_underestimation_bonferroni": 1
+    },
+    "scorecard": {
+      "grades": [
+        {
+          "grade": 1,
+          "n": 6269,
+          "defaults": 65,
+          "mean_pd": 0.011613924338325692,
+          "default_rate": 0.010368479821343117,
+          "jeffreys_p": 0.820644260394378
+        },
+        {
+          "grade": 2,
+          "n": 5936,
+          "defaults": 119,
+          "mean_pd": 0.020292556587660424,
+          "default_rate": 0.020047169811320754,
+          "jeffreys_p": 0.5475944100816381
+        },
+        {
+          "grade": 3,
+          "n": 6357,
+          "defaults": 170,
+          "mean_pd": 0.028147745486946416,
+          "default_rate": 0.026742173981437786,
+          "jeffreys_p": 0.7489295625391302
+        },
+        {
+          "grade": 4,
+          "n": 6163,
+          "defaults": 237,
+          "mean_pd": 0.036944387279418435,
+          "default_rate": 0.0384552977446049,
+          "jeffreys_p": 0.262670741553626
+        },
+        {
+          "grade": 5,
+          "n": 6073,
+          "defaults": 288,
+          "mean_pd": 0.047294172378374466,
+          "default_rate": 0.0474230199242549,
+          "jeffreys_p": 0.4775095916513724
+        },
+        {
+          "grade": 6,
+          "n": 6221,
+          "defaults": 375,
+          "mean_pd": 0.06028096432455041,
+          "default_rate": 0.06027969779778171,
+          "jeffreys_p": 0.49705151676051795
+        },
+        {
+          "grade": 7,
+          "n": 6155,
+          "defaults": 497,
+          "mean_pd": 0.07781424778397907,
+          "default_rate": 0.08074735987002438,
+          "jeffreys_p": 0.19467229164689503
+        },
+        {
+          "grade": 8,
+          "n": 6068,
+          "defaults": 639,
+          "mean_pd": 0.10295685972250151,
+          "default_rate": 0.10530652603823336,
+          "jeffreys_p": 0.2723133008853104
+        },
+        {
+          "grade": 9,
+          "n": 6174,
+          "defaults": 938,
+          "mean_pd": 0.14661271310833862,
+          "default_rate": 0.15192743764172337,
+          "jeffreys_p": 0.11919997076846572
+        },
+        {
+          "grade": 10,
+          "n": 6087,
+          "defaults": 1637,
+          "mean_pd": 0.27459918442152714,
+          "default_rate": 0.26893379333004763,
+          "jeffreys_p": 0.8389922417083856
+        }
+      ],
+      "n_rejected_underestimation": 0,
+      "n_rejected_overestimation": 0,
+      "default_rate_monotone": true,
+      "spearman_grade_vs_default_rate": 0.9999999999999999,
+      "n_rejected_underestimation_bonferroni": 0
+    },
+    "lightgbm_isotonic": {
+      "grades": [
+        {
+          "grade": 1,
+          "n": 4814,
+          "defaults": 39,
+          "mean_pd": 0.007526350385803868,
+          "default_rate": 0.008101371001246365,
+          "jeffreys_p": 0.3145196427913432
+        },
+        {
+          "grade": 2,
+          "n": 7599,
+          "defaults": 117,
+          "mean_pd": 0.013691228585565058,
+          "default_rate": 0.015396762731938412,
+          "jeffreys_p": 0.10200851127104606
+        },
+        {
+          "grade": 3,
+          "n": 3967,
+          "defaults": 87,
+          "mean_pd": 0.021535182134255877,
+          "default_rate": 0.021930930173934965,
+          "jeffreys_p": 0.42519717408810687
+        },
+        {
+          "grade": 4,
+          "n": 8188,
+          "defaults": 240,
+          "mean_pd": 0.03107388644695643,
+          "default_rate": 0.029311187103077674,
+          "jeffreys_p": 0.8206343385239319
+        },
+        {
+          "grade": 5,
+          "n": 5869,
+          "defaults": 244,
+          "mean_pd": 0.03796511235793408,
+          "default_rate": 0.0415743738285909,
+          "jeffreys_p": 0.07550372550411209
+        },
+        {
+          "grade": 6,
+          "n": 4832,
+          "defaults": 273,
+          "mean_pd": 0.04665819761505258,
+          "default_rate": 0.056498344370860924,
+          "jeffreys_p": 0.0008068988221503435
+        },
+        {
+          "grade": 7,
+          "n": 7604,
+          "defaults": 522,
+          "mean_pd": 0.06377430961412821,
+          "default_rate": 0.06864807995791689,
+          "jeffreys_p": 0.042171767234752675
+        },
+        {
+          "grade": 8,
+          "n": 5544,
+          "defaults": 605,
+          "mean_pd": 0.10736118045315797,
+          "default_rate": 0.10912698412698413,
+          "jeffreys_p": 0.3338333955885994
+        },
+        {
+          "grade": 9,
+          "n": 6164,
+          "defaults": 920,
+          "mean_pd": 0.139798819627907,
+          "default_rate": 0.14925373134328357,
+          "jeffreys_p": 0.01677956576639865
+        },
+        {
+          "grade": 10,
+          "n": 6922,
+          "defaults": 1918,
+          "mean_pd": 0.29299137848174694,
+          "default_rate": 0.27708754695174803,
+          "jeffreys_p": 0.9982569436678326
+        }
+      ],
+      "n_rejected_underestimation": 3,
+      "n_rejected_overestimation": 1,
+      "default_rate_monotone": true,
+      "spearman_grade_vs_default_rate": 0.9999999999999999,
+      "n_rejected_underestimation_bonferroni": 1
+    }
+  },
+  "bonferroni_alpha_per_grade": 0.005,
+  "segments": {
+    "contract_type=Cash loans": {
+      "n": 55694,
+      "defaults": 4624,
+      "auc": {
+        "lightgbm": 0.7814525342785498,
+        "scorecard": 0.7578163376409204
+      },
+      "delta_auc": 0.023636196637629392
+    },
+    "contract_type=Revolving loans": {
+      "n": 5809,
+      "defaults": 341,
+      "auc": {
+        "lightgbm": 0.7686126908464498,
+        "scorecard": 0.7561482751149314
+      },
+      "delta_auc": 0.012464415731518352
+    },
+    "bureau_history_status=bureau_with_history": {
+      "n": 18366,
+      "defaults": 1487,
+      "auc": {
+        "lightgbm": 0.7760850769269446,
+        "scorecard": 0.7545837649063772
+      },
+      "delta_auc": 0.021501312020567376
+    },
+    "bureau_history_status=bureau_no_history": {
+      "n": 34302,
+      "defaults": 2598,
+      "auc": {
+        "lightgbm": 0.7867426189364788,
+        "scorecard": 0.765255844234302
+      },
+      "delta_auc": 0.021486774702176747
+    },
+    "bureau_history_status=no_bureau": {
+      "n": 8835,
+      "defaults": 880,
+      "auc": {
+        "lightgbm": 0.763684075195703,
+        "scorecard": 0.7351677047025884
+      },
+      "delta_auc": 0.028516370493114618
+    },
+    "income_type=State servant": {
+      "n": 4378,
+      "defaults": 278,
+      "auc": {
+        "lightgbm": 0.7947060887875066,
+        "scorecard": 0.7783751535357081
+      },
+      "delta_auc": 0.016330935251798517
+    },
+    "income_type=Working": {
+      "n": 31893,
+      "defaults": 3017,
+      "auc": {
+        "lightgbm": 0.7784319042992419,
+        "scorecard": 0.7550750301094279
+      },
+      "delta_auc": 0.023356874189814025
+    },
+    "income_type=Commercial associate": {
+      "n": 14182,
+      "defaults": 1067,
+      "auc": {
+        "lightgbm": 0.7768048561835482,
+        "scorecard": 0.7549622490970046
+      },
+      "delta_auc": 0.02184260708654362
+    },
+    "income_type=Pensioner": {
+      "n": 11037,
+      "defaults": 601,
+      "auc": {
+        "lightgbm": 0.7559455972510363,
+        "scorecard": 0.7235323585515134
+      },
+      "delta_auc": 0.03241323869952284
+    }
+  },
+  "sensitivity_ext_sources_missing": {
+    "lightgbm": {
+      "auc_base": 0.7812398345245757,
+      "auc_ext_missing": 0.7401680916366812,
+      "mean_pd_base": 0.07939144268290727,
+      "mean_pd_ext_missing": 0.08302065234524016
+    },
+    "scorecard": {
+      "auc_base": 0.7586532805231797,
+      "auc_ext_missing": 0.711810085790316,
+      "mean_pd_base": 0.08036151437447012,
+      "mean_pd_ext_missing": 0.07957177510450594
+    }
+  },
+  "split_seed_stability": {
+    "per_seed": [
+      {
+        "split_seed": 11,
+        "lightgbm": 0.7809826627134218,
+        "scorecard": 0.7583331151375273,
+        "delta_auc": 0.022649547575894435
+      },
+      {
+        "split_seed": 22,
+        "lightgbm": 0.779478404795933,
+        "scorecard": 0.7565370483832188,
+        "delta_auc": 0.02294135641271422
+      },
+      {
+        "split_seed": 33,
+        "lightgbm": 0.7794037337381339,
+        "scorecard": 0.7574513618392884,
+        "delta_auc": 0.02195237189884547
+      }
+    ],
+    "note": "params as selected on the main split (no re-tuning per seed)",
+    "delta_auc_mean": 0.02251442529581804,
+    "delta_auc_min": 0.02195237189884547,
+    "delta_auc_max": 0.02294135641271422,
+    "champion_auc_sd": 0.0008908221257359326,
+    "scorecard_auc_sd": 0.0008980825649532108
+  }
+}

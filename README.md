@@ -7,7 +7,12 @@ A model-risk platform written in the style of bank model documentation. It has f
 - **C, macro forecasting:** classical baselines compared with foundation models, including the compute cost of each.
 - **D, LLM:** German credit-decision explanations that a deterministic verifier checks against the model's SHAP values.
 
-> **Status:** setup (milestone R1). No results yet. Every number in this README will be generated from `results/` by `task report`.
+> **Status:** R1 (data) and R2 (credit risk) done; R3 (market risk) next. Every number lives in the generated reports, built from `results/` by `task report`:
+> - credit model comparison: [`reports/credit_hc_challengers.md`](reports/credit_hc_challengers.md);
+> - tuning: [`reports/credit_hc_tuning.md`](reports/credit_hc_tuning.md);
+> - model card: [`reports/model_card_hc_pd.md`](reports/model_card_hc_pd.md);
+> - independent validation: [`reports/validation_hc_pd.md`](reports/validation_hc_pd.md);
+> - hypotheses and verdicts: [`docs/hypotheses.md`](docs/hypotheses.md).
 
 > **Not investment advice.** This is risk measurement, not a trading system. It makes no claims about returns or regulatory compliance.
 
